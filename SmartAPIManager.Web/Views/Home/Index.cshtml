@@ -1,0 +1,95 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    Layout = "_Layout";
+}
+
+<header class="header">
+    <div class="header-content">
+        <a asp-controller="Home" asp-action="Index" class="logo">Smart API Manager</a>
+        <nav class="navbar">
+            <button class="btnLogin-popup">Login</button>
+        </nav>
+    </div>
+</header>
+<section class="section">
+    <div class="wrapper" style="display: none;">
+        <span class="icon-close">
+            <i class='bx bx-x'></i>
+        </span>
+        <div class="logreg-box">
+            <!--login form-->
+            <div class="form-box login">
+                <div class="logreg-title">
+                    <h2>Login</h2>
+                    <p>Please login to use the platform</p>
+                </div>
+                <form class="login-form" action="#">
+                    <div class="input-box">
+                        <span class="icon"><i class='bx bxs-envelope'></i></span>
+                        <input type="email" required>
+                        <label>Email</label>
+                    </div>
+                    <div class="input-box">
+                        <span class="icon"><i class='bx bxs-lock-alt'></i></span>
+                        <input type="password" required>
+                        <label>Password</label>
+                    </div>
+                    <div class="remember-forgot">
+                        <label><input type="checkbox"> Remember me</label>
+                        <a href="#">Forgot password?</a>
+                    </div>
+                    <button type="submit" class="btn">Login</button>
+                    <div class="logreg-link">
+                        <p>Don't have an account?
+                            <a href="#" class="register-link">Register</a>
+                        </p>
+                    </div>
+                </form>
+            </div>
+            <!--register form-->
+            <div class="form-box register">
+                <div class="logreg-title">
+                    <h2>Registration</h2>
+                    <p>Please provide the following to verify your identity</p>
+                </div>
+                <form class="register-form" action="#">
+                    <div class="input-box">
+                        <span class="icon"><i class='bx bxs-user'></i></span>
+                        <input type="text" required>
+                        <label>Full Name</label>
+                    </div>
+                    <div class="input-box">
+                        <span class="icon"><i class='bx bxs-envelope'></i></span>
+                        <input type="email" required>
+                        <label>Email</label>
+                    </div>
+                    <div class="input-box">
+                        <span class="icon"><i class='bx bxs-lock-alt'></i></span>
+                        <input type="password" required>
+                        <label>Password</label>
+                    </div>
+                    <div class="remember-forgot">
+                        <label><input type="checkbox"> I agree to the terms & conditions</label>
+                    </div>
+                    <button type="submit" class="btn">Register</button>
+                    <div class="logreg-link">
+                        <p>Already have an account?
+                            <a href="#" class="login-link">Login</a>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="footer-content">
+        <p>&copy; 2024 Smart API Manager. All rights reserved.</p>
+        <ul class="socials">
+            <li><a href="#"><i class='bx bxl-facebook'></i></a></li>
+            <li><a href="#"><i class='bx bxl-twitter'></i></a></li>
+            <li><a href="#"><i class='bx bxl-linkedin'></i></a></li>
+        </ul>
+    </div>
+</footer>

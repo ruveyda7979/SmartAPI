@@ -32,13 +32,16 @@ namespace DBSmartAPIManager.DAL.Context
         {
             if (!optionsBuilder.IsConfigured)
             {
-                IConfigurationRoot config = new
-                        ConfigurationBuilder()
-                    .AddJsonFile("appsettings.json")
-                    .Build();
-                optionsBuilder.UseSqlServer
-                    (config.GetConnectionString("CS"));
-                optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+                if (!optionsBuilder.IsConfigured)
+                {
+                    IConfigurationRoot config = new
+                            ConfigurationBuilder()
+                        .AddJsonFile("appsettings.json")
+                        .Build();
+                    optionsBuilder.UseSqlServer
+                        (config.GetConnectionString("CS"));
+                    optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+                }
             }
         }
     }

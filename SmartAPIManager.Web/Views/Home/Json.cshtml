@@ -1,0 +1,75 @@
+﻿@{
+    ViewData["Title"] = "JSON Manager";
+    Layout = "_Layout";
+}
+
+<header class="header">
+    <div class="header-content">
+        <a asp-controller="Home" asp-action="Index" class="logo">Smart API Manager</a>
+    </div>
+</header>
+
+<div id="project-name-container" class="project-name-container"></div>
+
+<div id="json-container" class="container">
+    <div class="left-column">
+        <button id="new-json-btn">New</button>
+        <input type="text" id="search-json" placeholder="Search JSON by name...">
+        <ul id="json-list"></ul>
+    </div>
+    <div class="right-column">
+        <div id="json-form">
+            <!-- JSON Name ve Date aynı satırda -->
+            <div class="form-group">
+                <div class="form-item">
+                    <label for="json-name">JSON Name:</label>
+                    <input type="text" id="json-name">
+                </div>
+                <div class="form-item">
+                    <label for="date">Date:</label>
+                    <input type="date" id="date">
+                </div>
+            </div>
+            <!-- Request URL ve Related Table aynı satırda -->
+            <div class="form-group">
+                <div class="form-item">
+                    <label for="request-url">Request URL</label>
+                    <input type="text" id="request-url">
+                </div>
+                <div class="form-item">
+                    <label for="related-table">Related Table:</label>
+                    <input type="text" id="related-table">
+                </div>
+            </div>
+            <label for="content">Content:</label>
+            <textarea id="content"></textarea>
+            <!-- Sent Pattern ve Received Pattern aynı satırda -->
+            <div class="pattern-container">
+                <div class="editor-wrapper">
+                    <label for="sent-pattern">Sent Pattern:</label>
+                    <select id="sent-pattern-language">
+                        <option value="javascript">JavaScript</option>
+                        <option value="python">Python</option>
+                        <option value="clike">C/C++/Java/C#</option>
+                        <option value="dart">Dart</option>
+                    </select>
+                    <textarea id="sent-pattern" class="editor"></textarea>
+                </div>
+                <div class="editor-wrapper">
+                    <label for="received-pattern">Received Pattern:</label>
+                    <select id="received-pattern-language">
+                        <option value="javascript">JavaScript</option>
+                        <option value="python">Python</option>
+                        <option value="clike">C/C++/Java/C#</option>
+                        <option value="dart">Dart</option>
+                    </select>
+                    <textarea id="received-pattern" class="editor"></textarea>
+                </div>
+            </div>
+            <div class="button-container">
+                <button id="save-btn">Save</button>
+                <button id="back-to-projects-btn">Back to Projects</button>
+            </div>
+        </div>
+    </div>
+</div>
