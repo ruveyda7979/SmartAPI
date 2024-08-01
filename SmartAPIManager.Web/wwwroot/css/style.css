@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
-
+/* Genel stiller */
 * {
     margin: 0;
     padding: 0;
@@ -7,7 +6,14 @@
     font-family: 'Poppins', sans-serif;
 }
 
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding-top: 70px; /* Header yüksekliği kadar padding ekleyin */
+    background-color: #f4f4f9; /* Daha açık bir arka plan rengi */
+}
 
+/* Header stili */
 .header {
     position: fixed;
     top: 0;
@@ -16,80 +22,199 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 100px;
-    background:transparent;
+    padding: 30px 50px; /* Padding küçültüldü */
+    background-color: rgba(31, 31, 31, 0.85); /* Koyu bir transparan arka plan rengi */
     z-index: 1000;
+    color: #fff;
 }
 
-.header .header-content {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
+    .header .header-content {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 
 .logo {
     color: #fff;
-    font-size: 35px;
+    font-size: 25px; /* Font boyutu küçültüldü */
     text-decoration: none;
     font-weight: 700;
-    pointer-events: none;
 }
 
 .navbar .btnLogin-popup {
-    position: relative;
-    background: transparent;
-    border: none;
+    background: rgba(31, 31, 31, 0.85);
+    border: 2px solid #fff;
     outline: none;
-    font-size: 40px;
+    font-size: 20px;
     color: #fff;
-    font-weight: 800;
+    font-weight: 600;
     cursor: pointer;
     padding: 10px 20px;
     border-radius: 5px;
     transition: background-color 0.3s, color 0.3s;
 }
 
-.navbar .btnLogin-popup:hover {
-    background: rgba(255, 255, 255, 0.2);
-    color: #fff;
-}
+    .navbar .btnLogin-popup:hover {
+        background: #fff;
+        color: #1f1f1f;
+    }
 
-.section {
-    min-height: 100vh;
-    background: url("/images/apiBlog.png") no-repeat;
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
+/* Login ve Register popup stilleri */
 .wrapper {
     position: absolute;
     top: 0;
-    right: 0;
-    width: 450px;
+    left: 0;
+    width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, .2);
-    backdrop-filter: blur(15px);
-    box-shadow: -1px 0 10px rgba(0, 0, 0, .2);
-    border-left: 2px solid rgba(255, 255, 255, .1);
-    z-index: 100;
-    display: flex;
+    background: rgba(0, 0, 0, 0.5); /* Transparan arka plan rengi */
+    display: none;
     justify-content: center;
-    flex-direction: column;
-    padding: 0 40px;
-    
+    align-items: center;
+    z-index: 1000;
+}
+
+    .wrapper.active-popup {
+        display: flex;
+    }
+
+.logreg-box {
+    position: relative;
+    background: #fff;
+    width: 400px;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
 }
 
 
 
+
+.form-box {
+    display: none;
+}
+
+    .form-box.active {
+        display: block;
+    }
+
+
+
+.logreg-title h2 {
+    margin-bottom: 10px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.logreg-title p {
+    margin-bottom: 20px;
+    color: #666;
+}
+
+.input-box {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+    .input-box input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+
+    .input-box label {
+        position: absolute;
+        top: 50%;
+        left: 10px;
+        transform: translateY(-50%);
+        background: #fff;
+        padding: 0 5px;
+        color: #999;
+        pointer-events: none;
+        transition: 0.3s;
+    }
+
+    .input-box input:focus + label,
+    .input-box input:valid + label {
+        top: -10px;
+        left: 10px;
+        color: #333;
+        font-size: 12px;
+    }
+
+    .input-box .icon {
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        transform: translateY(-50%);
+        color: #999;
+        font-size: 18px;
+    }
+
+.remember-forgot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+    .remember-forgot label {
+        display: flex;
+        align-items: center;
+        color: #666;
+    }
+
+        .remember-forgot label input {
+            margin-right: 5px;
+        }
+
+    .remember-forgot a {
+        color: #666;
+        text-decoration: none;
+        transition: 0.3s;
+    }
+
+        .remember-forgot a:hover {
+            color: #333;
+        }
+
+.btn {
+    width: 100%;
+    padding: 10px;
+    background: rgba(31, 31, 31, 0.85);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+    .btn:hover {
+        background: #333;
+    }
+
+.logreg-link {
+    text-align: center;
+    color: #666;
+}
+
+    .logreg-link a {
+        color: #333;
+        text-decoration: none;
+        transition: 0.3s;
+    }
+
+        .logreg-link a:hover {
+            color: #666;
+        }
+
 .icon-close {
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 10px; /* Üstten biraz daha boşluk */
+    right: 10px; /* Sağdan biraz daha boşluk */
     width: 45px;
     height: 45px;
     background: #fff;
@@ -98,247 +223,174 @@
     justify-content: center;
     align-items: center;
     border-bottom-left-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Gölge ekleyin */
+    transition: background-color 0.3s, transform 0.3s; /* Geçiş efektleri */
 }
 
-.icon-close i {
-    font-size: 32px;
-    color: #333;
+    .icon-close i {
+        font-size: 32px;
+        color: #333;
+        transition: color 0.3s, transform 0.3s; /* Geçiş efektleri */
+    }
+
+    /* Hover etkisiyle değişiklikler */
+    .icon-close:hover {
+        background: #ff0000; /* Arka plan rengini kırmızıya değiştirin */
+        transform: scale(1.1); /* Biraz büyütün */
+    }
+
+        .icon-close:hover i {
+            color: #fff; /* Yazı rengini beyaza değiştirin */
+            transform: rotate(90deg); /* İkonu döndürün */
+        }
+
+/* Home sayfası için özel stiller */
+.home-page {
+    background: url("../image/apiBlog.png") no-repeat center center/cover; /* Arka plan resmini tam ekran kaplatın */
+    background-size: cover;
+    height: 100vh; /* Sayfanın tamamını kapla */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* İçeriği dikey olarak dengele */
 }
 
-.wrapper .logreg-box {
+    .home-page .section {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+    }
+
+/* Footer stili */
+.footer {
     width: 100%;
-}
-
-.wrapper .form-box.login {
-    display: block;
-}
-
-.wrapper.active .form-box.login {
-    display: none;
-}
-
-.wrapper .form-box.register {
-    display: none;
-}
-
-.wrapper.active .form-box.register {
-    display: block;
-}
-
-.logreg-box .logreg-title {
+    padding: 20px 0;
+    background-color: rgba(31, 31, 31, 0.85); /*Koyu bir transparan arka plan rengi*/
+    color: #fff;
     text-align: center;
-    margin-bottom: 40px;
-    color: #fff;
-}
-
-.logreg-title h2 {
-    font-size: 32px;
-}
-
-.logreg-title p {
-    font-size: 14px;
-    font-weight: 500;
-}
-
-.logreg-box .input-box {
     position: relative;
-    width: 100%;
-    height: 50px;
-    margin: 30px 0;
-    border-bottom: 2px solid #fff;
+    bottom: 0;
 }
 
-.input-box input {
-    width: 100%;
-    height: 100%;
-    background: transparent;
-    border: none;
-    outline: none;
-    font-size: 16px;
+    .footer .footer-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 50px;
+    }
+
+    .footer p {
+        margin: 0;
+    }
+
+    .footer .socials {
+        list-style: none;
+        display: flex;
+        gap: 10px;
+    }
+
+        .footer .socials li {
+            display: inline;
+        }
+
+        .footer .socials a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 20px;
+        }
+
+.home-page .footer {
+    background: none;
+    padding: 50px;
+    background-color: rgba(31, 31, 31, 0.85); /* Koyu bir transparan arka plan rengi */
     color: #fff;
-    font-weight: 500;
-    padding-right: 25px;
-}
-
-.input-box label {
+    text-align: center;
     position: absolute;
-    top: 50%;
-    left: 0;
-    transform: translateY(-50%);
-    font-size: 16px;
-    color: #fff;
-    font-weight: 500;
-    pointer-events: none;
-    transition: .5s;
+    bottom: 0;
+    width: 100%;
 }
 
-.input-box input:focus~label,
-.input-box input:valid~label {
-    top: -5px;
-}
-
-.input-box .icon {
-    position: absolute;
-    top: 50%;
-    right: 0;
-    transform: translateY(-50%);
-    font-size: 19px;
-    color: #fff;
-}
-
-.logreg-box .remember-forgot {
-    font-size: 14.5px;
-    color: #fff;
-    font-weight: 500;
-    margin: -15px 0 15px;
+.home-page .footer-content {
     display: flex;
     justify-content: space-between;
-}
-
-.remember-forgot label input {
-    accent-color: #fff;
-    margin-right: 3px;
-}
-
-.remember-forgot a {
-    color: #fff;
-    text-decoration: none;
-}
-
-.remember-forgot a:hover {
-    text-decoration: underline;
-}
-
-.logreg-box .btn {
-    width: 100%;
-    height: 45px;
-    background: #fff;
-    border: none;
-    outline: none;
-    border-radius: 40px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, .2);
-    cursor: pointer;
-    font-size: 16px;
-    color: #222;
-    font-weight: 600;
-}
-
-.logreg-box .logreg-link {
-    font-size: 14.5px;
-    color: #fff;
-    text-align: center;
-    font-weight: 500;
-    margin: 25px 0 15px;
-}
-
-.logreg-link p a {
-    color: #fff;
-    text-decoration: none;
-    font-weight: 600;
-}
-
-.logreg-link p a:hover {
-    text-decoration: underline;
-}
-
-.media-options {
-    display: flex;
     align-items: center;
-    flex-direction: column;
+    padding: 0 50px;
 }
 
-.media-options a {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 50px;
-    background: transparent;
-    border: 2px solid #fff;
-    margin: 10px 0;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, .2);
-    border-radius: 40px;
-    color: #fff;
-    text-decoration: none;
-    transition: .5s;
-}
-
-.media-options a:hover {
-    background: rgba(255, 255, 255, .1);
-}
-
-.media-options a i {
-    font-size: 22px;
-}
-
-.media-options a span {
-    font-size: 16px;
-    font-weight: 500;
-}
-
-
-body {
-    font-family: Arial, sans-serif;
+.home-page .footer p {
     margin: 0;
-    padding-top: 100px;
-    background-color:#c5d5e8;
-    
 }
 
-/* For Projects Page*/
+.home-page .footer .socials {
+    list-style: none;
+    display: flex;
+    gap: 10px;
+}
+
+    .home-page .footer .socials li {
+        display: inline;
+    }
+
+    .home-page .footer .socials a {
+        color: #fff;
+        text-decoration: none;
+        font-size: 20px;
+    }
 
 
-
-
-.container {
+/* Projects sayfası için stiller */
+.projects-page {
     max-width: 100%;
     margin: 0 auto;
-    background: #789cc0df;
+    background: #ffffff; /* Daha açık bir arka plan rengi */
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin-top: 100px; /*Add a top margin to the container*/
+    margin-top: 20px; /* Üst margin ayarlandı */
 }
 
-h1 {
-    text-align: center;
-    color: #fff;
-    margin-top: 80px;
-}
+    .projects-page h1 {
+        text-align: center;
+        color: #333; /* Daha koyu bir yazı rengi */
+        margin-top: 80px; /* Üst margin ekleyerek boşluk sağlıyoruz */
+        margin-bottom: 30px;
+        font-size: 36px; /* Başlık boyutunu biraz artırıyoruz, opsiyonel */
+    }
 
-input[type="text"] {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
+    .projects-page input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
 
-ul {
-    list-style: none;
-    padding: 0;
-}
+    .projects-page ul {
+        list-style: none;
+        padding: 0;
+    }
 
-li {
-    padding: 10px;
-    margin: 5px 0;
-    background: #e4e4e4;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+    .projects-page li {
+        padding: 10px;
+        margin: 5px 0;
+        background: #e4e4e4;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 
-button {
-    padding: 10px 20px;
-    margin: 10px 0;
-    background: #333;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-}
+    .projects-page button {
+        padding: 10px 20px;
+        margin: 10px 0;
+        background: rgba(31, 31, 31, 0.85); /* Koyu bir transparan arka plan rengi */
+        color: #fff;
+        border: none;
+        cursor: pointer;
+    }
 
-button:hover {
-    background: #555;
-}
+        .projects-page button:hover {
+            background: #333; /* Daha koyu bir arka plan rengi */
+        }
 
 .modal {
     display: none;
@@ -352,7 +404,6 @@ button:hover {
     background-color: rgba(0, 0, 0, 0.4);
     justify-content: center;
     align-items: center;
-
 }
 
 .modal-content {
@@ -363,24 +414,23 @@ button:hover {
     width: 80%;
     max-width: 500px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-
 }
 
 .close {
-    color:#aaa;
+    color: #aaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
 }
 
-.close:hover,
-.close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-}
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
 
-.modal-content label { 
+.modal-content label {
     display: block;
     margin-top: 10px;
 }
@@ -401,18 +451,18 @@ button:hover {
 .modal-content button {
     margin-top: 20px;
     padding: 10px 20px;
-    background: #333;
+    background: rgba(31, 31, 31, 0.85); /* Koyu bir transparan arka plan rengi */
     color: #fff;
     border: none;
     cursor: pointer;
 }
 
-.modal-content button:hover{
-    background: #555;
-}
+    .modal-content button:hover {
+        background: #333; /* Daha koyu bir arka plan rengi */
+    }
 
 #go-to-json-btn {
-    background: #333;
+    background: rgba(31, 31, 31, 0.85); /* Koyu bir transparan arka plan rengi */
     color: #fff;
     border: none;
     padding: 10px 20px;
@@ -421,27 +471,25 @@ button:hover {
     transition: background-color 0.3s;
 }
 
-#go-to-json-btn:hover {
-    background: #555;
-}
+    #go-to-json-btn:hover {
+        background: #333; /* Daha koyu bir arka plan rengi */
+    }
 
-
-/* JSON Yönetici sayfası için still*/
-
+/* JSON Yönetici sayfası için stiller */
 #json-container {
     display: flex;
-    margin-top: 100px;
-    height: calc(100vh-100px);/*Ekran yüksekliğinin kalanını kapla*/
+    margin-top: 20px;
+    height: calc(100vh - 140px); /* Header ve footer yüksekliğini çıkarın */
     width: 100%;
 }
 
-.left-column{
+.left-column {
     width: 30%;
     padding: 10px;
     background: #f4f4f4;
     border-right: 1px solid #ddd;
     overflow-y: auto;
-    max-height: calc(100vh-100px); /* Header'dan kalan alanı kaplar*/
+    max-height: calc(100vh - 140px); /* Header ve footer yüksekliğini çıkarın */
 }
 
 .right-column {
@@ -457,29 +505,28 @@ button:hover {
     padding: 0;
 }
 
-#json-list li {
-    display:flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    background: #eee;
-    margin-bottom: 5px;
-}
+    #json-list li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        background: #eee;
+        margin-bottom: 5px;
+    }
 
-#json-list li button {
-    background: #333;
-    color: #fff;
-    border:none;
-    padding: 5px 10px;
-    cursor: pointer;
+        #json-list li button {
+            background: rgba(31, 31, 31, 0.85); /* Koyu bir transparan arka plan rengi */
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
 
-}
+            #json-list li button:hover {
+                background: #333; /* Daha koyu bir arka plan rengi */
+            }
 
-#json-list li button:hover {
-    background: #555;
-}
-
-.form-group{
+.form-group {
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
@@ -490,9 +537,9 @@ button:hover {
     margin-right: 10px;
 }
 
-.form-item:last-child {
-    margin-right: 0;
-}
+    .form-item:last-child {
+        margin-right: 0;
+    }
 
 #json-form label {
     display: block;
@@ -507,35 +554,35 @@ button:hover {
     margin-top: 5px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    height: 35px; /*Yüksekliği 35px yap*/
-    box-sizing: border-box; /*Padding ve border dahil olacak şekilde hesapla*/
+    height: 35px; /* Yüksekliği 35px yap */
+    box-sizing: border-box; /* Padding ve border dahil olacak şekilde hesapla */
 }
 
-#json-form textarea.editor {
-    height: 1000px;
-}
+    #json-form textarea.editor {
+        height: 1000px;
+    }
 
 #json-form button {
     padding: 10px 20px;
-    background: #333;
+    background: rgba(31, 31, 31, 0.85); /* Koyu bir transparan arka plan rengi */
     color: #fff;
     border: none;
     cursor: pointer;
     margin-top: 10px;
 }
 
-#json-form button:hover {
-    background: #555;
-}
+    #json-form button:hover {
+        background: #333; /* Daha koyu bir arka plan rengi */
+    }
 
 .pattern-container {
     display: flex;
     justify-content: space-between;
 }
 
-.pattern-container .editor-wrapper {
-    width: 48%;
-}
+    .pattern-container .editor-wrapper {
+        width: 48%;
+    }
 
 #json-form .pattern-container label {
     display: block;
@@ -548,8 +595,8 @@ button:hover {
 }
 
 .CodeMirror {
-    height: 1000px; /*Editör yüksekliği büyütülmüş*/
-    border: 1px solid #ddd; /*Sınır ekle */
+    height: 1000px; /* Editör yüksekliği büyütülmüş */
+    border: 1px solid #ddd; /* Sınır ekle */
     border-radius: 4px;
     box-sizing: border-box;
 }
@@ -564,15 +611,76 @@ button:hover {
     transition: background-color 0.3s;
 }
 
-#back-to-projects-btn:hover {
-    background: #333;
-}
+    #back-to-projects-btn:hover {
+        background: #333; /* Daha koyu bir arka plan rengi */
+    }
 
 .project-name-container {
     text-align: left;
-    margin: 60px 100px 5px 100px; 
+    margin: 10px 100px 10px 100px;
     font-size: 24px;
     font-weight: bold;
-    color: #333;
+    color: #333; /* Daha koyu bir yazı rengi */
 }
 
+/* JSON sayfası için özel stiller */
+.json-page h1 {
+    text-align: center;
+    color: #333;
+    margin-top: 60px; /* Başlığı header'dan uzaklaştırmak için margin-top ekleyin */
+    margin-bottom: 10px;
+    font-size: 36px;
+}
+
+.json-page .left-column {
+    padding: 20px;
+    margin-top: 0px;
+}
+
+    .json-page .left-column button {
+        background: rgba(31, 31, 31, 0.85);
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        border-radius: 4px;
+        transition: background-color 0.3s;
+    }
+
+        .json-page .left-column button:hover {
+            background: #333;
+        }
+
+    .json-page .left-column input {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+
+    .json-page .left-column ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .json-page .left-column li {
+        padding: 10px;
+        margin: 5px 0;
+        background: #e4e4e4;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+        .json-page .left-column li button {
+            background: rgba(31, 31, 31, 0.85);
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+            .json-page .left-column li button:hover {
+                background: #333;
+            }

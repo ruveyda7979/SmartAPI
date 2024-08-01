@@ -6,13 +6,9 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('project-name-container').innerHTML = `<h2>Project: ${decodeURIComponent(projectName)}</h2>`;
     }
 
-    
-
     // Codemirror editörlerini tanımlayın
     const sentPatternElement = document.getElementById('sent-pattern');
     const receivedPatternElement = document.getElementById('received-pattern');
-    
-
     let sentPatternEditor, receivedPatternEditor;
 
     if (sentPatternElement) {
@@ -27,7 +23,6 @@ document.addEventListener('DOMContentLoaded', () => {
             mode: 'javascript',
         });
     }
-    
 
     // Home.html sayfasına özgü kodlar
     const wrapper = document.querySelector('.wrapper');
@@ -37,17 +32,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const iconClose = document.querySelector('.icon-close');
 
     if (wrapper && registerLink && loginLink && btnPopup && iconClose) {
+
         registerLink.addEventListener('click', () => {
             wrapper.classList.add('active');
+            document.querySelector('.form-box.login').classList.remove('active');
+            document.querySelector('.form-box.register').classList.add('active');
         });
 
         loginLink.addEventListener('click', () => {
             wrapper.classList.remove('active');
+            document.querySelector('.form-box.register').classList.remove('active');
+            document.querySelector('.form-box.login').classList.add('active');
         });
 
         btnPopup.addEventListener('click', () => {
             wrapper.style.display = 'flex';
             wrapper.classList.add('active-popup');
+            document.querySelector('.form-box.login').classList.add('active');
+            document.querySelector('.form-box.register').classList.remove('active');
         });
 
         iconClose.addEventListener('click', () => {
@@ -75,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const email = loginForm.querySelector('input[type="email"]').value;
                 const password = loginForm.querySelector('input[type="password"]').value;
                 alert(`Logged in with Email: ${email}`);
-                window.location.href = 'projects.html';
+                window.location.href = projectsUrl; // Hard-coded URL yerine değişken kullanın
             });
         }
     }
@@ -151,12 +153,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         updateProjectBtn.addEventListener('click', () => {
-            const projectName = editProjectNameInput.value;
-            const projectDescription = editProjectDescriptionInput.value;
+            const projectName = editProjectNameInput.value.trim();
+            const projectDescription = editProjectDescriptionInput.value.trim();
             const projectFile = editProjectFileInput.files[0] ? editProjectFileInput.files[0].name : projects[currentEditIndex].file;
             const projectDate = editProjectDateInput.value;
 
-            if (projectName && projectDescription && projectDate) {
+            if (projectName) {
                 projects[currentEditIndex] = {
                     name: projectName,
                     description: projectDescription,
@@ -167,7 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 renderProjects();
                 editModal.style.display = 'none';
             } else {
-                alert('Please fill in all fields');
+                alert('Please fill in the Project Name field');
             }
         });
 
@@ -186,7 +188,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // Proje öğesine tıklama işlevi
                 li.addEventListener('click', () => {
-                    window.location.href = `json.html?project=${encodeURIComponent(project.name)}`;
+                    const projectName = encodeURIComponent(project.name); // Proje adını URL için kodlayın
+                    const jsonUrl = `${jsonPageBaseUrl}?project=${projectName}`; // URL'yi oluşturun
+                    window.location.href = jsonUrl; // Yönlendirme yapın
                 });
             });
 
@@ -244,16 +248,27 @@ document.addEventListener('DOMContentLoaded', () => {
     if (jsonContainer) {
         // JSON verilerini proje adına göre yükleme
         let jsonDataList = loadJsonData(projectName);
-        
 
         const jsonList = document.getElementById('json-list');
-
+        const searchJsonInput = document.getElementById('search-json');
         const backToProjectsBtn = document.getElementById('back-to-projects-btn');
+        const newJsonBtn = document.getElementById('new-json-btn');
+
         if (backToProjectsBtn) {
-           backToProjectsBtn.addEventListener('click', () => {
-             window.location.href = 'projects.html';
+            backToProjectsBtn.addEventListener('click', () => {
+                window.location.href = projectsPageUrl; 
             });
         }
+
+        newJsonBtn.addEventListener('click', () => {
+            clearForm();
+            currentEditIndex = null;
+        });
+
+        searchJsonInput.addEventListener('input', () => {
+            const searchValue = searchJsonInput.value.toLowerCase();
+            renderJsonList(jsonDataList.filter(jsonData => jsonData.name.toLowerCase().includes(searchValue)));
+        });
 
         // JSON verilerini kaydetme ve güncelleme
         const saveBtn = document.getElementById('save-btn');
@@ -269,41 +284,37 @@ document.addEventListener('DOMContentLoaded', () => {
             };
 
             if (jsonData.name) {
-                if(currentEditIndex !==null){
-                    //Mevcut json verisini güncelle
+                if (currentEditIndex !== null) {
+                    // Mevcut json verisini güncelle
                     jsonDataList[currentEditIndex] = jsonData;
-                    currentEditIndex = null; // Güncellme sonrası index sıfırla
-                }else{
+                    currentEditIndex = null; // Güncelleme sonrası index sıfırla
+                } else {
                     // Yeni json verisini ekle
                     jsonDataList.push(jsonData);
                 }
-                renderJsonList();
+                renderJsonList(jsonDataList);
                 clearForm();
-                saveJsonData(projectName,jsonDataList);
-            }else{
+                saveJsonData(projectName, jsonDataList);
+            } else {
                 alert('Json Name is required.');
             }
         });
 
-        
-
-        function renderJsonList() {
+        function renderJsonList(dataList) {
             jsonList.innerHTML = '';
-            jsonDataList.forEach((jsonData, index) => {
+            dataList.forEach((jsonData, index) => {
                 const li = document.createElement('li');
                 li.innerHTML = `
-                    <span>${jsonData.name}</span>                    
-                    <button class="delete-btn" data-index="${index}">Delete</button>
-                `;
+                     <span>${jsonData.name}</span>
+                     <button class="delete-btn" data-index="${index}">Delete</button>
+                 `;
                 jsonList.appendChild(li);
-
-                
 
                 li.querySelector('.delete-btn').addEventListener('click', (e) => {
                     e.stopPropagation();
                     if (confirm('Are you sure you want to delete this JSON entry?')) {
                         jsonDataList.splice(index, 1);
-                        renderJsonList();
+                        renderJsonList(jsonDataList);
                         clearForm();
                         saveJsonData(projectName, jsonDataList);
                     }
@@ -312,7 +323,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 li.addEventListener('click', () => {
                     fillForm(jsonData);
                     currentEditIndex = index;
-                    
                 });
             });
         }
@@ -348,8 +358,6 @@ document.addEventListener('DOMContentLoaded', () => {
             currentEditIndex = null;
         }
 
-        
-
         // JSON verilerini yükleme ve kaydetme işlevleri (proje adına göre)
         function loadJsonData(projectName) {
             const data = localStorage.getItem(`jsonDataList_${projectName}`);
@@ -360,6 +368,6 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.setItem(`jsonDataList_${projectName}`, JSON.stringify(jsonDataList));
         }
 
-        renderJsonList();
+        renderJsonList(jsonDataList);
     }
 });

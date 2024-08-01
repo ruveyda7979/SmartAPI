@@ -1,13 +1,12 @@
 ﻿@{
-    ViewData["Title"] = "JSON Manager";
-    Layout = "_Layout";
+    ViewData["Title"] = "JSON";
+    ViewData["BodyClass"] = "json-page";
 }
 
-<header class="header">
-    <div class="header-content">
-        <a asp-controller="Home" asp-action="Index" class="logo">Smart API Manager</a>
-    </div>
-</header>
+
+
+<h1>JSONS</h1>
+<h2>Project: @ViewBag.ProjectName</h2>
 
 <div id="project-name-container" class="project-name-container"></div>
 
@@ -19,7 +18,6 @@
     </div>
     <div class="right-column">
         <div id="json-form">
-            <!-- JSON Name ve Date aynı satırda -->
             <div class="form-group">
                 <div class="form-item">
                     <label for="json-name">JSON Name:</label>
@@ -30,7 +28,6 @@
                     <input type="date" id="date">
                 </div>
             </div>
-            <!-- Request URL ve Related Table aynı satırda -->
             <div class="form-group">
                 <div class="form-item">
                     <label for="request-url">Request URL</label>
@@ -43,7 +40,6 @@
             </div>
             <label for="content">Content:</label>
             <textarea id="content"></textarea>
-            <!-- Sent Pattern ve Received Pattern aynı satırda -->
             <div class="pattern-container">
                 <div class="editor-wrapper">
                     <label for="sent-pattern">Sent Pattern:</label>
@@ -73,3 +69,15 @@
         </div>
     </div>
 </div>
+
+@section scripts {
+    <script>
+        // Projects sayfasının base URL'si
+        var projectsPageUrl = '@Url.Action("Index", "Projects")';
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/javascript/javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/python/python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/clike/clike.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/dart/dart.min.js"></script>
+}

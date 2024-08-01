@@ -1,14 +1,9 @@
 ﻿@{
-    ViewData["Title"] = "Projects Page";
-    Layout = "_Layout";
+    ViewData["Title"] = "Projects";
+    ViewData["BodyClass"] = "projects-page";
 }
 
-<header class="header">
-    <div class="header-content">
-        <a asp-controller="Home" asp-action="Index" class="logo">Smart API Manager</a>
-    </div>
-</header>
-<h1>Projects</h1>
+<h1>PROJECTS</h1>
 <div class="container">
     <input type="text" id="filter" placeholder="Search projects...">
     <ul id="project-list">
@@ -16,7 +11,8 @@
     </ul>
     <button id="add-project-btn">Add Project</button>
 </div>
-<!--Modal Structure-->
+
+<!-- Modal Structure -->
 <div id="add-project-modal" class="modal">
     <div class="modal-content">
         <span class="close">&times;</span>
@@ -32,7 +28,8 @@
         <button id="save-project-btn">Save Project</button>
     </div>
 </div>
-<!--Edit Project Modal-->
+
+<!-- Edit Project Modal -->
 <div id="edit-project-modal" class="modal">
     <div class="modal-content">
         <span class="close-edit">&times;</span>
@@ -48,7 +45,8 @@
         <button id="update-project-btn">Update Project</button>
     </div>
 </div>
-<!--Project Details Modal-->
+
+<!-- Project Details Modal -->
 <div id="project-details-modal" class="modal">
     <div class="modal-content">
         <span class="close">&times;</span>
@@ -59,3 +57,12 @@
         <p><strong>File:</strong><span id="detail-project-file"></span></p>
     </div>
 </div>
+
+@section scripts {
+    <script>
+        // Base URL oluşturma: URL'nin dinamik kısmı action ve controller'dan gelir
+        var jsonPageBaseUrl = '@Url.Action("Json", "Home")';
+    </script>>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/javascript/javascript.min.js"></script>
+}

@@ -2,21 +2,40 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewData["Title"] - Smart API Manager</title>
-    
-    <link rel="stylesheet" href="~/css/style.css"> <!-- Burada yeni stil dosyası eklendi -->
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="~/css/style.css">
     <link rel="icon" href="~/favicon.ico" type="image/x-icon">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css">
+    @RenderSection("styles", required: false)
 </head>
-<body>
-    <div class="container">
+<body class="@ViewData["BodyClass"]">
+    <header class="header">
+        <div class="header-content">
+            <a href="@Url.Action("Index", "Home")" class="logo">Smart API Manager</a>
+            @RenderSection("headerContent", required: false)
+        </div>
+    </header>
+    <main role="main" class="container">
         @RenderBody()
-    </div>
+    </main>
+    @if (ViewData["BodyClass"].ToString() == "home-page")
+    {
+        <footer class="footer">
+            <div class="footer-content">
+                <p>&copy; 2024 Smart API Manager. All rights reserved.</p>
+                <ul class="socials">
+                    <li><a href="#">Facebook<i class='bx bxl-facebook'></i></a></li>
+                    <li><a href="#">Twitter<i class='bx bxl-twitter'></i></a></li>
+                    <li><a href="#">Linked<i class='bx bxl-linkedin'></i></a></li>
+                </ul>
+            </div>
+        </footer>
+    }
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/javascript/javascript.min.js"></script>
     <script src="~/js/scripts.js"></script>
+    @RenderSection("scripts", required: false)
 </body>
 </html>

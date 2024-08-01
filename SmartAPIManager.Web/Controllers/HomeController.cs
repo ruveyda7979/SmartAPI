@@ -28,8 +28,11 @@ namespace SmartAPIManager.Web.Controllers
             return View();
         }
 
-        public IActionResult Json()
+        public IActionResult Json(string project)
         {
+            // 'project' parametresine göre ilgili verileri yükle ve view'a gönder
+            ViewBag.ProjectName = project;
+            // ViewModel veya diðer verileri burada hazýrlayabilirsiniz.
             return View();
         }
 

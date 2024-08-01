@@ -1,23 +1,29 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-    Layout = "_Layout";
+﻿1@{
+    ViewData["Title"] = "Home";
+    ViewData["BodyClass"] = "home-page";
 }
 
-<header class="header">
-    <div class="header-content">
-        <a asp-controller="Home" asp-action="Index" class="logo">Smart API Manager</a>
-        <nav class="navbar">
-            <button class="btnLogin-popup">Login</button>
-        </nav>
-    </div>
-</header>
+@section styles {
+    <style>
+        .home-page {
+            background: url(@Url.Content("~/images/apiBlog.png")) no-repeat center center/cover;
+        }
+    </style>
+}
+
+@section headerContent {
+    <nav class="navbar">
+        <button class="btnLogin-popup">Login</button>
+    </nav>
+}
+
 <section class="section">
     <div class="wrapper" style="display: none;">
         <span class="icon-close">
             <i class='bx bx-x'></i>
         </span>
         <div class="logreg-box">
-            <!--login form-->
+            <!-- Login form -->
             <div class="form-box login">
                 <div class="logreg-title">
                     <h2>Login</h2>
@@ -40,13 +46,14 @@
                     </div>
                     <button type="submit" class="btn">Login</button>
                     <div class="logreg-link">
-                        <p>Don't have an account?
+                        <p>
+                            Don't have an account?
                             <a href="#" class="register-link">Register</a>
                         </p>
                     </div>
                 </form>
             </div>
-            <!--register form-->
+            <!-- Register form -->
             <div class="form-box register">
                 <div class="logreg-title">
                     <h2>Registration</h2>
@@ -73,7 +80,8 @@
                     </div>
                     <button type="submit" class="btn">Register</button>
                     <div class="logreg-link">
-                        <p>Already have an account?
+                        <p>
+                            Already have an account?
                             <a href="#" class="login-link">Login</a>
                         </p>
                     </div>
@@ -83,13 +91,11 @@
     </div>
 </section>
 
-<footer class="footer">
-    <div class="footer-content">
-        <p>&copy; 2024 Smart API Manager. All rights reserved.</p>
-        <ul class="socials">
-            <li><a href="#"><i class='bx bxl-facebook'></i></a></li>
-            <li><a href="#"><i class='bx bxl-twitter'></i></a></li>
-            <li><a href="#"><i class='bx bxl-linkedin'></i></a></li>
-        </ul>
-    </div>
-</footer>
+@section scripts {
+    <script>
+        var projectsUrl = '@Url.Action("Index", "Projects")';
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/javascript/javascript.min.js"></script>
+    <script src="~/js/scripts.js"></script>
+}
