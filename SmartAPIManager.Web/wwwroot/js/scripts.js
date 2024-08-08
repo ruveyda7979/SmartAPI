@@ -80,6 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
         //        window.location.href = projectsUrl; // Hard-coded URL yerine değişken kullanın
         //    });
         //}
+        //abc
     }
 
     // Projects.html sayfasına özgü kodlar
