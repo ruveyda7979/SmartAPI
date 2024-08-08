@@ -70,16 +70,16 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        const loginForm = document.querySelector('.login-form');
-        if (loginForm) {
-            loginForm.addEventListener('submit', (event) => {
-                event.preventDefault();
-                const email = loginForm.querySelector('input[type="email"]').value;
-                const password = loginForm.querySelector('input[type="password"]').value;
-                alert(`Logged in with Email: ${email}`);
-                window.location.href = projectsUrl; // Hard-coded URL yerine değişken kullanın
-            });
-        }
+        //const loginForm = document.querySelector('.login-form');
+        //if (loginForm) {
+        //    loginForm.addEventListener('submit', (event) => {
+        //        event.preventDefault();
+        //        const email = loginForm.querySelector('input[type="email"]').value;
+        //        const password = loginForm.querySelector('input[type="password"]').value;
+        //        alert(`Logged in with Email: ${email}`);
+        //        window.location.href = projectsUrl; // Hard-coded URL yerine değişken kullanın
+        //    });
+        //}
     }
 
     // Projects.html sayfasına özgü kodlar
@@ -188,9 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // Proje öğesine tıklama işlevi
                 li.addEventListener('click', () => {
-                    const projectName = encodeURIComponent(project.name); // Proje adını URL için kodlayın
-                    const jsonUrl = `${jsonPageBaseUrl}?project=${projectName}`; // URL'yi oluşturun
-                    window.location.href = jsonUrl; // Yönlendirme yapın
+                    window.location.href = `json.html?project=${encodeURIComponent(project.name)}`;
                 });
             });
 
@@ -254,11 +252,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const backToProjectsBtn = document.getElementById('back-to-projects-btn');
         const newJsonBtn = document.getElementById('new-json-btn');
 
-        if (backToProjectsBtn) {
-            backToProjectsBtn.addEventListener('click', () => {
-                window.location.href = projectsPageUrl; 
-            });
-        }
+        //if (backToProjectsBtn) {
+        //    backToProjectsBtn.addEventListener('click', () => {
+        //        window.location.href = projectsPageUrl; 
+        //    });
+        //}
 
         newJsonBtn.addEventListener('click', () => {
             clearForm();

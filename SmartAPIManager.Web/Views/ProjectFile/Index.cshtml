@@ -1,0 +1,33 @@
+﻿@model IEnumerable<DBSmartAPIManager.DAL.Entities.ProjectFile>
+@{
+    ViewData["Title"] = "Project Files";
+}
+
+<h2>Project Files</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>File Name</th>
+            <th>File Way</th>
+            <th>Upload Date</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.FileName</td>
+                <td>@item.FileWay</td>
+                <td>@item.UploadDate.ToString("yyyy-MM-dd")</td>
+                <td>
+                    <a asp-controller="ProjectFile" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-controller="ProjectFile" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+   
+</table>
+<a asp-controller="ProjectFile" asp-action="Create">Create New</a>

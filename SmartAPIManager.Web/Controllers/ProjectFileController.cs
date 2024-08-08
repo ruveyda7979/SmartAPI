@@ -30,5 +30,69 @@ namespace SmartAPIManager.Web.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ProjectFile projectFile)
+        {
+            if(ModelState.IsValid)
+            {
+                await _projectFileService.SaveAsync(projectFile);
+                return RedirectToAction(nameof(Index));
+            }
+            return View(projectFile);
+        }
+
+        //Get:Edit
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            var projectFile = await _projectFileService.GetByIdAsync(id);
+            if(projectFile == null)
+            {
+                return NotFound();
+            }
+            return View (projectFile);
+        }
+
+        //Get:Edit
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+
+        public async Task<IActionResult> Edit(int id, ProjectFile projectFile)
+        {
+            if(id != projectFile.Id)
+            {
+                return BadRequest();
+            } 
+            if (ModelState.IsValid)
+            {
+                await _projectFileService.UpdateAsync(projectFile);
+                return RedirectToAction(nameof(Index));
+            }
+            return View(projectFile);
+        }
+
+        //Get:Delete
+        public async Task<IActionResult> Delete(int id)
+        {
+            var projectFile = await _projectFileService.GetByIdAsync(id);
+            if (projectFile == null)
+            {
+                return NotFound();
+            }
+            return View(projectFile);
+        }
+
+        //Post:Delete
+
+        [HttpPost,ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            await _projectFileService.DeleteAsync(x => x.Id == id);
+            return RedirectToAction(nameof(Index));
+
+        }
+
+
+
     }
 }

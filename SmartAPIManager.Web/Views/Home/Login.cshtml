@@ -1,0 +1,39 @@
+﻿@model SmartAPIManager.Web.Models.ViewModels.LoginViewModel
+
+@{
+    ViewData["Title"] = "Login";
+    Layout = "_Layout";
+}
+
+<h2>Login</h2>
+<div class="form-box login">
+    <div class="logreg-title">
+        <h2>Login</h2>
+        <p>Please login to use the platform</p>
+    </div>
+<form asp-action="Login" asp-controller="Home" method="post">
+    <div class="input-box">
+        <span class="icon"><i class='bx bxs-envelope'></i></span>
+        <input name="Email" id="Email" type="email" class="form-control" required />
+        <label>Email</label>
+
+    </div>
+    <div class="input-box">
+        <span class="icon"><i class='bx bxs-lock-alt'></i></span>
+        <input name="Password" id="Password" type="password" class="form-control" required />
+        <label>Password</label>
+
+    </div>
+    <div class="remember-forgot">
+        <label><input type="checkbox"> Remember me</label>
+        <a href="#">Forgot password?</a>
+    </div>
+    <button type="submit" class="button-link">Login</button>
+    <div class="logreg-link">
+        <p>
+            Don't have an account?
+            <a asp-action="Register" asp-controller="Home">Register</a>
+        </p>
+    </div>
+</form>
+</div>

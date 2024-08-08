@@ -1,0 +1,49 @@
+﻿@model SmartAPIManager.Web.Models.ViewModels.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Register";
+    Layout = "_Layout";
+}
+
+<h2>Register</h2>
+<div class="form-box register">
+    <div class="logreg-title">
+        <h2>Registration</h2>
+        <p>Please provide the following to verify your identity</p>
+    </div>
+<form asp-action="Register" asp-controller="Home" method="post">
+    <div class="input-box">
+        <span class="icon"><i class='bx bxs-user'></i></span>
+        <input name="FullName" type="text" id="FullName" class="form-control" required />
+        <label>Full Name</label>
+
+    </div>
+    <div class="input-box">
+        <span class="icon"><i class='bx bxs-envelope'></i></span>
+        <input name="Email" id="Email" type="email" class="form-control" required />
+        <label>Email</label>
+
+    </div>
+    <div class="input-box">
+        <span class="icon"><i class='bx bxs-lock-alt'></i></span>
+        <input name="Password" id="Password" type="password" class="form-control" required />
+        <label>Password</label>
+
+    </div>
+    <div class="input-box">
+        <input name="ConfirmPassword" id="ConfirmPassword" type="password" class="form-control" required />
+        <label>Confirm Password</label>
+
+    </div>
+    @* <div class="remember-forgot">
+        <label><input type="checkbox"> I agree to the terms & conditions</label>
+    </div> *@
+    <button type="submit" class="btn">Register</button>
+    <div class="logreg-link">
+        <p>
+            Already have an account?
+            <a asp-action="Login" asp-controller="Home">Login</a>
+        </p>
+    </div>
+</form>
+</div>

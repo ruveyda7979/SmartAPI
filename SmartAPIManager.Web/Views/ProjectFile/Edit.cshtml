@@ -1,0 +1,32 @@
+﻿@model DBSmartAPIManager.DAL.Entities.ProjectFile
+
+@{
+    ViewData["Title"] = "Edit Project File";
+}
+
+<h2>Edit Project File</h2>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="form-group">
+        <label asp-for="FileName"></label>
+        <input asp-for="FileName" class="form-control" />
+        <span asp-validation-for="FileName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="FileWay"></label>
+        <input asp-for="FileWay" class="form-control" />
+        <span asp-validation-for="FileWay" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="UploadDate"></label>
+        <input asp-for="UploadDate" class="form-control" />
+        <span asp-validation-for="UploadDate" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+
+</form>
+<a asp-action="Index">Back to List</a>

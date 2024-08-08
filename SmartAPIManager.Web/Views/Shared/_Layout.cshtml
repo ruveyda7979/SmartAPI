@@ -20,7 +20,7 @@
     <main role="main" class="container">
         @RenderBody()
     </main>
-    @if (ViewData["BodyClass"].ToString() == "home-page")
+    @if (ViewData["BodyClass"] != null && ViewData["BodyClass"].ToString() == "home-page")
     {
         <footer class="footer">
             <div class="footer-content">
