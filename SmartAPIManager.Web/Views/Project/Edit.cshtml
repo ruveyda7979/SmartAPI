@@ -2,38 +2,37 @@
 
 @{
     ViewData["Title"] = "Edit Project";
+    Layout = "_Layout";
 }
 
-<h2>Edit Project</h2>
-
-<form asp-action="Edit" method="post">
-    <input type="hidden" asp-for="Id" />
-
-    <div class="form-group">
-        <label asp-for="Name"></label>
-        <input asp-for="Name" class="form-control" />
-        <span asp-validation-for="Name" class="text-danger"></span>
+<div id="edit-project-modal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Edit Project</h2>
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
+            <input type="hidden" asp-for="ProjectId" />
+            <div class="form-group">
+                <label for="edit-project-name">Project Name:</label>
+                <input type="text" id="edit-project-name" asp-for="Name" class="form-control" required />
+            </div>
+            <div class="form-group">
+                <label for="edit-project-description">Project Description:</label>
+                <textarea id="edit-project-description" asp-for="Description" class="form-control" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="edit-project-file">Project File:</label>
+                <input type="file" id="edit-project-file" name="File" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="edit-project-date">Date:</label>
+                <input type="date" id="edit-project-date" asp-for="UploadDate" class="form-control" required />
+            </div>
+            <button type="submit" class="btn btn-primary">Update Project</button>
+        </form>
     </div>
+</div>
 
-    <div class="form-group">
-        <label asp-for="Description"></label>
-        <input asp-for="Description" class="form-control" />
-        <span asp-validation-for="Description" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="UploadDate"></label>
-        <input asp-for="UploadDate" class="form-control" />
-        <span asp-validation-for="UploadDate" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="UserId"></label>
-        <input asp-for="UserId" class="form-control" />
-        <span asp-validation-for="UserId" class="text-danger"></span>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Save</button>
-
-</form>
-<a asp-action="Index">Back to List</a>
+@section scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/javascript/javascript.min.js"></script>
+}

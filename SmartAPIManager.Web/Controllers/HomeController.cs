@@ -30,9 +30,10 @@ namespace SmartAPIManager.Web.Controllers
             return View();
         }
 
+        [HttpPost]
         public IActionResult Projects()
-        {
-            return View();
+        {          
+            return RedirectToAction("Index", "Project"); // Örnek olarak kullanýcýyý Project Index sayfasýna yönlendirme
         }
 
         public IActionResult Json()
@@ -54,7 +55,7 @@ namespace SmartAPIManager.Web.Controllers
                 var user = await _userService.ValidateUserAsync(model.Email, HashPassword(model.Password));
                 if (user != null)
                 {
-                    return RedirectToAction("Projects", "Home");
+                    return RedirectToAction("Index", "Project");
                 }
 
                 ModelState.AddModelError(string.Empty, "Invalid login attempt.");
@@ -71,6 +72,8 @@ namespace SmartAPIManager.Web.Controllers
         }
 
         [HttpPost]
+
+
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
@@ -85,7 +88,7 @@ namespace SmartAPIManager.Web.Controllers
                 bool isRegistered = await _userService.RegisterUserAsync(user);
                 if (isRegistered)
                 {
-                    return RedirectToAction("Login");
+                    return RedirectToAction("Index", "Home");
                 }
                 else
                 {

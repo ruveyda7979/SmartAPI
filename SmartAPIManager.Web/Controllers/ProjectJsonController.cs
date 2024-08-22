@@ -57,7 +57,7 @@ namespace SmartAPIManager.Web.Controllers
 
         public async Task<IActionResult> Edit(int id, ProjectJson projectJson)
         {
-            if(id != projectJson.Id)
+            if(id != projectJson.ProjectJsonId)
             {
                 return BadRequest();
             }
@@ -87,7 +87,7 @@ namespace SmartAPIManager.Web.Controllers
 
         public async Task<IActionResult> DeleteConfirmed(int id) 
         {
-            await _projectJsonService.DeleteAsync(x => x.Id == id);
+            await _projectJsonService.DeleteAsync(x => x.ProjectJsonId == id);
             return RedirectToAction(nameof(Index));
         }
 

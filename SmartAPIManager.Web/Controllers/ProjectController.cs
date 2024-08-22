@@ -1,4 +1,4 @@
-﻿using DBSmartAPIManager.DAL.Entities;
+﻿ using DBSmartAPIManager.DAL.Entities;
 using DBSmartAPIManager.DAL.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,11 +7,13 @@ namespace SmartAPIManager.Web.Controllers
     public class ProjectController : Controller
     {
         private readonly ProjectService _projectService;
+        private readonly UserService _userService;
 
         // Constructor
-        public ProjectController(ProjectService projectService)
+        public ProjectController(ProjectService projectService,UserService userService)
         {
             _projectService = projectService;
+            _userService = userService;
         }
 
         public async Task<IActionResult> Index()
@@ -31,13 +33,36 @@ namespace SmartAPIManager.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _projectService.SaveAsync(project);
-                return RedirectToAction(nameof(Index));
+                // Oturum açmış kullanıcının e-posta adresini al
+                var email = User.Identity.Name;
+
+                // Kullanıcının UserId'sini al
+                var user = await _userService.SelectAsync(u => u.Email == email);
+
+                if (user != null)
+                {
+                    // Projeye oturum açmış kullanıcının UserId'sini ekle
+                    project.UserId = user.UserId;
+
+                    // Projeyi veritabanına kaydet
+                    await _projectService.SaveAsync(project);
+
+                    // Index sayfasına yönlendir
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    // Kullanıcı bulunamazsa bir hata mesajı göster
+                    ModelState.AddModelError("", "Kullanıcı bilgisi alınamadı.");
+                }
             }
+
+            // ModelState geçerli değilse veya kullanıcı bulunamadıysa formu yeniden göster
             return View(project);
         }
 
-       public async Task<IActionResult> Edit(int id)
+
+        public async Task<IActionResult> Edit(int id)
         {
             var project = await _projectService.GetByIdAsync(id);
             if (project == null) 
@@ -51,7 +76,7 @@ namespace SmartAPIManager.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Project project)
         {
-            if (id != project.Id)
+            if (id != project.ProjectId)
             {
                 return BadRequest();
             }
@@ -79,7 +104,7 @@ namespace SmartAPIManager.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            await _projectService.DeleteAsync(x => x.Id == id);
+            await _projectService.DeleteAsync(x => x.ProjectId == id);
             return RedirectToAction(nameof(Index));
         }
         

@@ -22,10 +22,10 @@ namespace DBSmartAPIManager.DAL.Context
         {
         }
 
-        public virtual DbSet<Project>Projects  { get; set; }
-        public virtual DbSet<User>Users  { get; set; }
-        public virtual DbSet<ProjectFile>ProjectFiles  { get; set; }
-        public virtual DbSet<ProjectJson>ProjectJsons  { get; set; }
+        public virtual DbSet<Project>Project  { get; set; }
+        public virtual DbSet<User>User  { get; set; }
+        public virtual DbSet<ProjectFile>ProjectFile  { get; set; }
+        public virtual DbSet<ProjectJson>ProjectJson  { get; set; }
 
         protected override void OnConfiguring
             (DbContextOptionsBuilder optionsBuilder)

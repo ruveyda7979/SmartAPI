@@ -57,7 +57,7 @@ namespace SmartAPIManager.Web.Controllers
 
         public async Task<IActionResult> Edit(int id, ProjectFile projectFile)
         {
-            if(id != projectFile.Id)
+            if(id != projectFile.ProjectFileId)
             {
                 return BadRequest();
             } 
@@ -87,7 +87,7 @@ namespace SmartAPIManager.Web.Controllers
 
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            await _projectFileService.DeleteAsync(x => x.Id == id);
+            await _projectFileService.DeleteAsync(x => x.ProjectFileId == id);
             return RedirectToAction(nameof(Index));
 
         }

@@ -71,7 +71,7 @@ namespace SmartAPIManager.Web.Controllers
 
         public async Task<IActionResult> Edit(int id, User user)
         {
-            if (id != user.Id)
+            if (id != user.UserId)
             {
                 return BadRequest();
             }
@@ -100,7 +100,7 @@ namespace SmartAPIManager.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            await _userService.DeleteAsync(x => x.Id == id);
+            await _userService.DeleteAsync(x => x.UserId == id);
             return RedirectToAction(nameof(Index));
         }
     }

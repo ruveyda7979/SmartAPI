@@ -22,8 +22,8 @@
                 <td>@item.FileWay</td>
                 <td>@item.UploadDate.ToString("yyyy-MM-dd")</td>
                 <td>
-                    <a asp-controller="ProjectFile" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-controller="ProjectFile" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a asp-controller="ProjectFile" asp-action="Edit" asp-route-id="@item.ProjectFileId">Edit</a> |
+                    <a asp-controller="ProjectFile" asp-action="Delete" asp-route-id="@item.ProjectFileId">Delete</a>
                 </td>
             </tr>
         }

@@ -8,11 +8,11 @@ namespace DBSmartAPIManager.DAL.Entities
 {
     public class Project
     {
-        public int Id { get; set; }
+        public int ProjectId { get; set; }
         public string Name { get; set; }
 
         public string Description { get; set; }
-        public DateTime UploadDate { get; set; }
+        public DateTime UploadDate { get; set; } = DateTime.Now;
 
         public int UserId { get; set; }
 

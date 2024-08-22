@@ -61,6 +61,12 @@ body {
     }
 
 /* Login ve Register popup stilleri */
+
+/* Register sayfasında wrapper varsayılan olarak görünür olsun */
+.register-page .wrapper {
+    display: flex;
+}
+
 .wrapper {
     position: absolute;
     top: 0;
@@ -68,7 +74,7 @@ body {
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.5); /* Transparan arka plan rengi */
-    display: none;
+    display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1000;
@@ -461,19 +467,51 @@ body {
         background: #333; /* Daha koyu bir arka plan rengi */
     }
 
-#go-to-json-btn {
+/*new create page css*/
+
+.create-project-page{
+    max-width: 600px;
+    margin: 0 auto;
+    background:#ffffff; /*lighter background color*/
+    padding:20px;
+    box-shadow:0 0 10px rgba(0, 0,0,0.1);
+    margin-top:40px;
+}
+
+create-project-page h2 {
+    text-align:center;
+    color:#333;
+    margin-bottom:30px;
+}
+
+.create-project-page .form-group {
+    margin-bottom: 15px;
+}
+
+    .create-project-page .form-group label {
+        font-weight: bold;
+    }
+
+.create-project-page .form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.create-project-page .btn-primary {
     background: rgba(31, 31, 31, 0.85); /* Koyu bir transparan arka plan rengi */
     color: #fff;
     border: none;
     padding: 10px 20px;
     cursor: pointer;
-    border-radius: 4px;
-    transition: background-color 0.3s;
 }
 
-    #go-to-json-btn:hover {
+    .create-project-page .btn-primary:hover {
         background: #333; /* Daha koyu bir arka plan rengi */
     }
+
+
 
 /* JSON Yönetici sayfası için stiller */
 #json-container {

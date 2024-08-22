@@ -13,23 +13,25 @@
 
 @section headerContent {
     <nav class="navbar">
-        <button class="btnLogin-popup">Login</button>
+        <form asp-action="Login" asp-controller="Home" method="get" >
+            <button class="btn btn-primary">Login</button>
+        </form>
     </nav>
 }
 
-<section class="section">
+@* <section class="section">
     <div class="wrapper" style="display: none;">
         <span class="icon-close">
             <i class='bx bx-x'></i>
         </span>
-        <div class="logreg-box">
-           @*  <!-- Login form -->
+        <div class="logreg-box"> 
+            <!-- Login form -->
             <div class="form-box login">
                 <div class="logreg-title">
                     <h2>Login</h2>
                     <p>Please login to use the platform</p>
                 </div>
-                @* <form asp-action="Login" asp-controller="Account" method="post">
+                 <form asp-action="Projects" asp-controller="Home" method="post">
                     <div class="input-box">
                         <span class="icon"><i class='bx bxs-envelope'></i></span>
                         <input name="Email" id="Email" type="email" class="form-control" required />
@@ -50,18 +52,18 @@
                     <div class="logreg-link">
                         <p>
                             Don't have an account?
-                            <a href="#" class="register-link">Register</a>
+                            <a asp-action="Register" asp-controller="Home">Register</a>
                         </p>
                     </div>
-                </form> *@
-            @* </div> *@
+                </form> 
+            </div> 
             <!-- Register form -->
-            @* <div class="form-box register">
+             <div class="form-box register">
                 <div class="logreg-title">
                     <h2>Registration</h2>
                     <p>Please provide the following to verify your identity</p>
                 </div>
-                <form asp-action="Register" asp-controller="Account" method="post">
+                <form asp-action="Register" asp-controller="Home" method="post">
                     <div class="input-box">
                         <span class="icon"><i class='bx bxs-user'></i></span>
                         <input name="FullName" type="text" id="FullName" class="form-control" required />
@@ -96,11 +98,11 @@
                         </p>
                     </div>
                 </form>
-            </div>  *@
-        </div>
+            </div> 
+         </div> 
     </div>
 </section>
-
+ *@
 @section scripts {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/javascript/javascript.min.js"></script>

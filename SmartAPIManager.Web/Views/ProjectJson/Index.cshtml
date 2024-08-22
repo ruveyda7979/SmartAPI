@@ -23,8 +23,8 @@
                 <td>@item.RequestUrl</td>
                 <td>@item.UploadDate.ToString("yyyy-MM-dd")</td>
                 <td>
-                    <a asp-controller="ProjectJson" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-controller="ProjectJson" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a asp-controller="ProjectJson" asp-action="Edit" asp-route-id="@item.ProjectJsonId">Edit</a> |
+                    <a asp-controller="ProjectJson" asp-action="Delete" asp-route-id="@item.ProjectJsonId">Delete</a>
                 </td>
             </tr>
         }

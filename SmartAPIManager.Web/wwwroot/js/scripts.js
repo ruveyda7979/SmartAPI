@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', function () {
     const params = new URLSearchParams(window.location.search);
     const projectName = params.get('project');
     let currentEditIndex = null;
@@ -25,63 +25,91 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Home.html sayfasına özgü kodlar
-    const wrapper = document.querySelector('.wrapper');
-    const registerLink = document.querySelector('.register-link');
-    const loginLink = document.querySelector('.login-link');
-    const btnPopup = document.querySelector('.btnLogin-popup');
-    const iconClose = document.querySelector('.icon-close');
 
-    if (wrapper && registerLink && loginLink && btnPopup && iconClose) {
+    //OLD
+    //const wrapper = document.querySelector('.wrapper');
+    //const registerLink = document.querySelector('.register-link');
+    //const loginLink = document.querySelector('.login-link');
+    //const btnPopup = document.querySelector('.btnLogin-popup');
+    //const iconClose = document.querySelector('.icon-close');
 
-        registerLink.addEventListener('click', () => {
-            wrapper.classList.add('active');
-            document.querySelector('.form-box.login').classList.remove('active');
-            document.querySelector('.form-box.register').classList.add('active');
-        });
+    //if (wrapper && registerLink && loginLink && btnPopup && iconClose) {
 
-        loginLink.addEventListener('click', () => {
-            wrapper.classList.remove('active');
-            document.querySelector('.form-box.register').classList.remove('active');
-            document.querySelector('.form-box.login').classList.add('active');
-        });
+    //    registerLink.addEventListener('click', () => {
+    //        wrapper.classList.add('active');
+    //        document.querySelector('.form-box.login').classList.remove('active');
+    //        document.querySelector('.form-box.register').classList.add('active');
+    //    });
 
-        btnPopup.addEventListener('click', () => {
-            wrapper.style.display = 'flex';
-            wrapper.classList.add('active-popup');
-            document.querySelector('.form-box.login').classList.add('active');
-            document.querySelector('.form-box.register').classList.remove('active');
-        });
+    //    loginLink.addEventListener('click', () => {
+    //        wrapper.classList.remove('active');
+    //        document.querySelector('.form-box.register').classList.remove('active');
+    //        document.querySelector('.form-box.login').classList.add('active');
+    //    });
 
-        iconClose.addEventListener('click', () => {
-            wrapper.style.display = 'none';
-            wrapper.classList.remove('active-popup');
-            wrapper.classList.remove('active');
-        });
+    //    btnPopup.addEventListener('click', () => {
+    //        wrapper.style.display = 'flex';
+    //        wrapper.classList.add('active-popup');
+    //        document.querySelector('.form-box.login').classList.add('active');
+    //        document.querySelector('.form-box.register').classList.remove('active');
+    //    });
 
-        const registrationForm = document.querySelector('.register-form');
-        if (registrationForm) {
-            registrationForm.addEventListener('submit', (event) => {
-                event.preventDefault();
-                const fullName = registrationForm.querySelector('input[type="text"]').value;
-                const email = registrationForm.querySelector('input[type="email"]').value;
-                const password = registrationForm.querySelector('input[type="password"]').value;
-                alert(`Registered with Name: ${fullName}, Email: ${email}`);
-                wrapper.classList.remove('active');
-            });
-        }
+    //    iconClose.addEventListener('click', () => {
+    //        wrapper.style.display = 'none';
+    //        wrapper.classList.remove('active-popup');
+    //        wrapper.classList.remove('active');
+    //    });
 
-        //const loginForm = document.querySelector('.login-form');
-        //if (loginForm) {
-        //    loginForm.addEventListener('submit', (event) => {
-        //        event.preventDefault();
-        //        const email = loginForm.querySelector('input[type="email"]').value;
-        //        const password = loginForm.querySelector('input[type="password"]').value;
-        //        alert(`Logged in with Email: ${email}`);
-        //        window.location.href = projectsUrl; // Hard-coded URL yerine değişken kullanın
-        //    });
-        //}
-        //abc
-    }
+    //    const registrationForm = document.querySelector('.register-form');
+    //    if (registrationForm) {
+    //        registrationForm.addEventListener('submit', (event) => {
+    //            event.preventDefault();
+    //            const fullName = registrationForm.querySelector('input[type="text"]').value;
+    //            const email = registrationForm.querySelector('input[type="email"]').value;
+    //            const password = registrationForm.querySelector('input[type="password"]').value;
+    //            alert(`Registered with Name: ${fullName}, Email: ${email}`);
+    //            wrapper.classList.remove('active');
+    //        });
+
+    //NEW
+    //const wrapper = document.querySelector('.wrapper');
+    //const btnPopup = document.querySelector('.btnLogin-popup');
+    //const iconClose = document.querySelector('.icon-close');
+
+    //if (wrapper && btnPopup && iconClose) {
+    //    btnPopup.addEventListener('click', () => {
+    //        wrapper.style.display = 'flex'; // Modal görünür hale getirilir
+    //        wrapper.classList.add('active-popup');
+    //        document.querySelector('.form-box.login').classList.add('active'); // Login formu aktif hale gelir
+    //        if (document.querySelector('.form-box.register')) {
+    //            document.querySelector('.form-box.register').classList.remove('active');
+    //        }
+    //    });
+
+    //    iconClose.addEventListener('click', () => {
+    //        wrapper.style.display = 'none'; // Modal kapatılır
+    //        wrapper.classList.remove('active-popup');
+    //        wrapper.classList.remove('active');
+    //    });
+    //}
+
+    //// Eğer Register.cshtml sayfasındaysanız, wrapper'ı varsayılan olarak görünür hale getirin
+    //if (document.body.classList.contains('register-page')) {
+    //    wrapper.style.display = 'flex';
+    //}
+
+    //const loginForm = document.querySelector('.login-form');
+    //if (loginForm) {
+    //    loginForm.addEventListener('submit', (event) => {
+    //        event.preventDefault();
+    //        const email = loginForm.querySelector('input[type="email"]').value;
+    //        const password = loginForm.querySelector('input[type="password"]').value;
+    //        alert(`Logged in with Email: ${email}`);
+    //        window.location.href = projectsUrl; // Hard-coded URL yerine değişken kullanın
+    //    });
+    //}
+    //abc
+
 
     // Projects.html sayfasına özgü kodlar
     const projectList = document.getElementById('project-list');
@@ -131,48 +159,61 @@ document.addEventListener('DOMContentLoaded', () => {
             editModal.style.display = 'none';
         });
 
+        //saveProjectBtn.addEventListener('click', () => {
+        //    const projectName = projectNameInput.value.trim();
+        //    const projectDescription = projectDescriptionInput.value.trim();
+        //    const projectFile = projectFileInput.files[0] ? projectFileInput.files[0].name : '';
+        //    const projectDate = projectDateInput.value;
+
+        //    if (projectName) {
+        //        const project = {
+        //            name: projectName,
+        //            description: projectDescription,
+        //            file: projectFile,
+        //            date: projectDate
+        //        };
+        //        projects.push(project);
+        //        renderProjects();
+        //        modal.style.display = 'none';
+        //        clearInputs();
+        //    } else {
+        //        alert('Please enter the project name');
+        //    }
+        //});
+
+        //updateProjectBtn.addEventListener('click', () => {
+        //    const projectName = editProjectNameInput.value.trim();
+        //    const projectDescription = editProjectDescriptionInput.value.trim();
+        //    const projectFile = editProjectFileInput.files[0] ? editProjectFileInput.files[0].name : projects[currentEditIndex].file;
+        //    const projectDate = editProjectDateInput.value;
+
+        //    if (projectName) {
+        //        projects[currentEditIndex] = {
+        //            name: projectName,
+        //            description: projectDescription,
+        //            file: projectFile,
+        //            date: projectDate
+        //        };
+
+        //        renderProjects();
+        //        editModal.style.display = 'none';
+        //    } else {
+        //        alert('Please fill in the Project Name field');
+        //    }
+        //});
+
+        // Save Project - Form submit işlemi
         saveProjectBtn.addEventListener('click', () => {
-            const projectName = projectNameInput.value.trim();
-            const projectDescription = projectDescriptionInput.value.trim();
-            const projectFile = projectFileInput.files[0] ? projectFileInput.files[0].name : '';
-            const projectDate = projectDateInput.value;
-
-            if (projectName) {
-                const project = {
-                    name: projectName,
-                    description: projectDescription,
-                    file: projectFile,
-                    date: projectDate
-                };
-                projects.push(project);
-                renderProjects();
-                modal.style.display = 'none';
-                clearInputs();
-            } else {
-                alert('Please enter the project name');
-            }
+            const form = saveProjectBtn.closest('form');
+            form.submit(); // Formu sunucuya gönder
         });
 
+        // Update Project - Form submit işlemi
         updateProjectBtn.addEventListener('click', () => {
-            const projectName = editProjectNameInput.value.trim();
-            const projectDescription = editProjectDescriptionInput.value.trim();
-            const projectFile = editProjectFileInput.files[0] ? editProjectFileInput.files[0].name : projects[currentEditIndex].file;
-            const projectDate = editProjectDateInput.value;
-
-            if (projectName) {
-                projects[currentEditIndex] = {
-                    name: projectName,
-                    description: projectDescription,
-                    file: projectFile,
-                    date: projectDate
-                };
-
-                renderProjects();
-                editModal.style.display = 'none';
-            } else {
-                alert('Please fill in the Project Name field');
-            }
+            const form = updateProjectBtn.closest('form');
+            form.submit(); // Formu sunucuya gönder
         });
+
 
         function renderProjects() {
             projectList.innerHTML = '';
@@ -217,12 +258,12 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        function clearInputs() {
-            projectNameInput.value = '';
-            projectDescriptionInput.value = '';
-            projectFileInput.value = '';
-            projectDateInput.value = '';
-        }
+        //function clearInputs() {
+        //    projectNameInput.value = '';
+        //    projectDescriptionInput.value = '';
+        //    projectFileInput.value = '';
+        //    projectDateInput.value = '';
+        //}
 
         filterInput.addEventListener('keyup', () => {
             const filterValue = filterInput.value.toLowerCase();
@@ -370,3 +411,6 @@ document.addEventListener('DOMContentLoaded', () => {
         renderJsonList(jsonDataList);
     }
 });
+
+
+
