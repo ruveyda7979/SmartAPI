@@ -113,175 +113,62 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Projects.html sayfasına özgü kodlar
     const projectList = document.getElementById('project-list');
-    const addProjectBtn = document.getElementById('add-project-btn');
     const filterInput = document.getElementById('filter');
+    const projectDetailsModal = document.getElementById('project-details-modal');
 
-    if (projectList && addProjectBtn && filterInput) {
-        const modal = document.getElementById('add-project-modal');
-        const closeModal = document.querySelector('.close');
-        const saveProjectBtn = document.getElementById('save-project-btn');
-        const projectNameInput = document.getElementById('project-name');
-        const projectDescriptionInput = document.getElementById('project-description');
-        const projectFileInput = document.getElementById('project-file');
-        const projectDateInput = document.getElementById('project-date');
-
-        const projectDetailsModal = document.getElementById('project-details-modal');
+    if (projectList && filterInput && projectDetailsModal) {
         const closeDetailsModal = projectDetailsModal.querySelector('.close');
-        const detailProjectName = document.getElementById('detail-project-name');
-        const detailProjectDescription = document.getElementById('detail-project-description');
-        const detailProjectDate = document.getElementById('detail-project-date');
-        const detailProjectFile = document.getElementById('detail-project-file');
 
-        const editModal = document.getElementById('edit-project-modal');
-        const closeEditModal = document.querySelector('.close-edit');
-        const updateProjectBtn = document.getElementById('update-project-btn');
-        const editProjectNameInput = document.getElementById('edit-project-name');
-        const editProjectDescriptionInput = document.getElementById('edit-project-description');
-        const editProjectFileInput = document.getElementById('edit-project-file');
-        const editProjectDateInput = document.getElementById('edit-project-date');
-
-        let projects = [];
-        let currentEditIndex = null;
-
-        addProjectBtn.addEventListener('click', () => {
-            modal.style.display = 'flex';
-        });
-
-        closeModal.addEventListener('click', () => {
-            modal.style.display = 'none';
-        });
-
+        // Modal'ı kapatma işlevi
         closeDetailsModal.addEventListener('click', () => {
             projectDetailsModal.style.display = 'none';
         });
 
-        closeEditModal.addEventListener('click', () => {
-            editModal.style.display = 'none';
-        });
-
-        //saveProjectBtn.addEventListener('click', () => {
-        //    const projectName = projectNameInput.value.trim();
-        //    const projectDescription = projectDescriptionInput.value.trim();
-        //    const projectFile = projectFileInput.files[0] ? projectFileInput.files[0].name : '';
-        //    const projectDate = projectDateInput.value;
-
-        //    if (projectName) {
-        //        const project = {
-        //            name: projectName,
-        //            description: projectDescription,
-        //            file: projectFile,
-        //            date: projectDate
-        //        };
-        //        projects.push(project);
-        //        renderProjects();
-        //        modal.style.display = 'none';
-        //        clearInputs();
-        //    } else {
-        //        alert('Please enter the project name');
-        //    }
-        //});
-
-        //updateProjectBtn.addEventListener('click', () => {
-        //    const projectName = editProjectNameInput.value.trim();
-        //    const projectDescription = editProjectDescriptionInput.value.trim();
-        //    const projectFile = editProjectFileInput.files[0] ? editProjectFileInput.files[0].name : projects[currentEditIndex].file;
-        //    const projectDate = editProjectDateInput.value;
-
-        //    if (projectName) {
-        //        projects[currentEditIndex] = {
-        //            name: projectName,
-        //            description: projectDescription,
-        //            file: projectFile,
-        //            date: projectDate
-        //        };
-
-        //        renderProjects();
-        //        editModal.style.display = 'none';
-        //    } else {
-        //        alert('Please fill in the Project Name field');
-        //    }
-        //});
-
-        // Save Project - Form submit işlemi
-        saveProjectBtn.addEventListener('click', () => {
-            const form = saveProjectBtn.closest('form');
-            form.submit(); // Formu sunucuya gönder
-        });
-
-        // Update Project - Form submit işlemi
-        updateProjectBtn.addEventListener('click', () => {
-            const form = updateProjectBtn.closest('form');
-            form.submit(); // Formu sunucuya gönder
-        });
-
-
-        function renderProjects() {
-            projectList.innerHTML = '';
-            projects.forEach((project, index) => {
-                const li = document.createElement('li');
-                li.innerHTML = `
-                    <strong>${project.name}</strong>
-                    <p>${project.description}</p>
-                    <p>${project.date}</p>
-                    <button class="edit-btn" data-index="${index}">Edit</button>
-                    <button class="delete-btn" data-index="${index}">Delete</button>
-                `;
-                projectList.appendChild(li);
-
-                // Proje öğesine tıklama işlevi
-                li.addEventListener('click', () => {
-                    window.location.href = `json.html?project=${encodeURIComponent(project.name)}`;
-                });
-            });
-
-            document.querySelectorAll('.edit-btn').forEach(button => {
-                button.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    currentEditIndex = e.target.dataset.index;
-                    const project = projects[currentEditIndex];
-                    editProjectNameInput.value = project.name;
-                    editProjectDescriptionInput.value = project.description;
-                    editProjectDateInput.value = project.date;
-                    editModal.style.display = 'flex';
-                });
-            });
-
-            document.querySelectorAll('.delete-btn').forEach(button => {
-                button.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    const index = e.target.dataset.index;
-                    if (confirm('Are you sure you want to delete this project?')) {
-                        projects.splice(index, 1);
-                        renderProjects();
-                    }
-                });
-            });
-        }
-
-        //function clearInputs() {
-        //    projectNameInput.value = '';
-        //    projectDescriptionInput.value = '';
-        //    projectFileInput.value = '';
-        //    projectDateInput.value = '';
-        //}
-
+        // Filter işlemi
         filterInput.addEventListener('keyup', () => {
             const filterValue = filterInput.value.toLowerCase();
-            const filteredProjects = projects.filter(project => project.name.toLowerCase().includes(filterValue));
-            projectList.innerHTML = '';
-            filteredProjects.forEach((project, index) => {
-                const li = document.createElement('li');
-                li.innerHTML = `
-                    <strong>${project.name}</strong>
-                    <p>${project.description}</p>
-                    <p>${project.date}</p>
-                    <button class="edit-btn" data-index="${index}">Edit</button>
-                    <button class="delete-btn" data-index="${index}">Delete</button>
-                `;
-                projectList.appendChild(li);
+            const projects = Array.from(projectList.getElementsByTagName('li'));
+            projects.forEach(project => {
+                const projectName = project.querySelector('strong').textContent.toLowerCase();
+                project.style.display = projectName.includes(filterValue) ? '' : 'none';
             });
         });
+
+        // Details modal'ına verileri yerleştirme
+        $('#project-details-modal').on('show.bs.modal', function (event) {
+            const button = $(event.relatedTarget);
+            const name = button.data('name');
+            const description = button.data('description');
+            const date = button.data('date');
+            const file = button.data('file'); // Project File Eklendi
+
+            const modal = $(this);
+            modal.find('#detail-project-name').text(name);
+            modal.find('#detail-project-description').text(description);
+            modal.find('#detail-project-date').text(date);
+            modal.find('#detail-project-file').text(file); // Project File Eklendi
+        });
     }
+
+    // Delete işlemi için kodlar
+    $(document).ready(function () {
+        // Delete button click event
+        $('.delete-button').on('click', function () {
+            var projectId = $(this).data('id'); // Butondan ID'yi al
+            $('#delete-project-id').val(projectId); // ID'yi modal formuna yerleştir
+            $('#delete-confirmation-modal').show(); // Modalı göster
+        });
+
+        // Close modal event
+        $('.close-delete-modal').on('click', function () {
+            $('#delete-confirmation-modal').hide(); // Modalı kapat
+        });
+
+        // Form submit işlemi
+        $('#delete-confirmation-form').on('submit', function () {
+            $('#delete-confirmation-modal').hide(); // Modalı kapat
+        });
+    });
 
     // JSON Yönetim sayfasına özgü kodlar
     const jsonContainer = document.getElementById('json-container');

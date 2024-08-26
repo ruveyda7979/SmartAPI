@@ -16,5 +16,14 @@ namespace DBSmartAPIManager.DAL.Entities
 
         public int UserId { get; set; }
 
+        //Navigation property for the related User
+        public User User { get; set; }
+
+        //Navigation property for related ProjectFiles
+        public ICollection<ProjectFile> ProjectFile {  get; set; }
+
+        // Navigation property for related ProjectJsons
+        public ICollection<ProjectJson> ProjectJson { get; set; }
+
     }
 }

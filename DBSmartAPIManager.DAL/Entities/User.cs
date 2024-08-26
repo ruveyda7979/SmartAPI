@@ -13,5 +13,8 @@ namespace DBSmartAPIManager.DAL.Entities
         public string Email { get; set; }
         public string Password { get; set; }
         public DateTime UploadDate { get; set; } = DateTime.Now;
+
+        // Navigation property for related Projects
+        public ICollection<Project> Projects { get; set; }
     }
 }

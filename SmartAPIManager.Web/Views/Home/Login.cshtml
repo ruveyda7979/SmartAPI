@@ -4,26 +4,25 @@
     ViewData["Title"] = "Login";
     Layout = "_Layout";
 }
-<h2>Login</h2>
 
+<h2>Login</h2>
 <form asp-action="Login" asp-controller="Home" method="post">
     <div>
         <label>Email</label>
-        <input name="Email" id="Email" type="email" required/>
+        <input name="Email" id="Email" type="email" required />
     </div>
-
     <div>
         <label>Password</label>
-        <input name="Password" id="Password" type="password" required/>
+        <input name="Password" id="Password" type="password" required />
     </div>
-
-    <button type="submit">Login</button>
-
     <div>
-        <p>Don't have an account?
+        <label><input type="checkbox" name="RememberMe" /> Remember me</label>
+    </div>
+    <button type="submit">Login</button>
+    <div>
+        <p>
+            Don't have an account?
             <a asp-action="Register" asp-controller="Home">Register here</a>
         </p>
-
     </div>
-
 </form>

@@ -13,27 +13,23 @@
         {
             <li>
                 <strong>@project.Name</strong>
-                <p>@project.Description</p>
-                <p>@project.UploadDate.ToString("yyyy-MM-dd")</p>
                 
                 <!-- Details Button -->
                 <button type="button" class="btn btn-info" data-toggle="modal" data-target="#project-details-modal"
-                        data-name="@project.Name" data-description="@project.Description" 
-                        data-date="@project.UploadDate.ToString("yyyy-MM-dd")">
+                        data-name="@project.Name" data-description="@project.Description"
+                        data-date="@project.UploadDate.ToString("yyyy-MM-dd")" data-file="@project.ProjectFile">
                     Details
                 </button>
 
                 <!-- Edit Button -->
                 <form asp-action="Edit" asp-controller="Project" method="get" style="display:inline;">
-                    <input type="hidden" name="Id" value="@project.ProjectId" />
+                    <input type="hidden" name="id" value="@project.ProjectId" />
                     <button type="submit" class="btn btn-warning">Edit</button>
                 </form>
 
                 <!-- Delete Button -->
-                <form asp-action="Delete" asp-controller="Project" method="post" style="display:inline;">
-                    <input type="hidden" name="Id" value="@project.ProjectId" />
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                </form>
+                <button type="button" class="btn btn-danger delete-button" data-id="@project.ProjectId">Delete</button>
+
             </li>
         }
        
@@ -44,6 +40,7 @@
     </form>
 </div>
 
+
 <!-- Details Modal -->
 <div id="project-details-modal" class="modal">
     <div class="modal-content">
@@ -52,8 +49,25 @@
         <p><strong>Project Name:</strong><span id="detail-project-name"></span></p>
         <p><strong>Description:</strong><span id="detail-project-description"></span></p>
         <p><strong>Date:</strong><span id="detail-project-date"></span></p>
+        <p><strong>File:</strong><span id="detail-project-file"></span></p> <!-- Project File Eklendi -->
     </div>
 </div>
+
+<!-- Delete Confirmation Modal -->
+<div id="delete-confirmation-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-delete-modal">&times;</span>
+        <h2>Delete Confirmation</h2>
+        <p>Are you sure you want to delete this project?</p>
+        <form id="delete-confirmation-form" method="post">
+            <input type="hidden" id="delete-project-id" name="id" />
+            <button type="submit" class="btn btn-danger">Delete</button>
+            <button type="button" class="btn btn-secondary close-delete-modal">Cancel</button>
+        </form>
+    </div>
+</div>
+
+
 
 @* <!-- Modal Structure -->
 <div id="add-project-modal" class="modal">
@@ -105,20 +119,5 @@
 @section scripts {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/javascript/javascript.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            // Details Modal'ın açılması sırasında proje verilerini modal'a yerleştirme
-            $('#project-details-modal').on('show.bs.modal', function (event) {
-                var button = $(event.relatedTarget); // Modalı açan butonu alır
-                var name = button.data('name'); // Proje adını alır
-                var description = button.data('description'); // Proje açıklamasını alır
-                var date = button.data('date'); // Proje tarihini alır
-
-                var modal = $(this); // Açılmakta olan modal
-                modal.find('#detail-project-name').text(name); // Proje adını modal'a yerleştirir
-                modal.find('#detail-project-description').text(description); // Açıklamayı modal'a yerleştirir
-                modal.find('#detail-project-date').text(date); // Tarihi modal'a yerleştirir
-            });
-        });
-    </script>
+    
 }

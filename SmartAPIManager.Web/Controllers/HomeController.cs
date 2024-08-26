@@ -1,8 +1,11 @@
 using DBSmartAPIManager.DAL.Entities;
 using DBSmartAPIManager.DAL.Services;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using SmartAPIManager.Web.Models;
 using SmartAPIManager.Web.Models.ViewModels;
+using System.Security.Claims;
 using System.Diagnostics;
 using System.Text;
 using System.Security.Cryptography;
@@ -55,14 +58,37 @@ namespace SmartAPIManager.Web.Controllers
                 var user = await _userService.ValidateUserAsync(model.Email, HashPassword(model.Password));
                 if (user != null)
                 {
+
+                    //Kullanýcýyý kimlik doðrulama iþlemi için claim'ler oluþturuldu
+                    var claims = new List<Claim>
+                    {
+                        new Claim(ClaimTypes.Name, user.Email),
+                        new Claim(ClaimTypes.NameIdentifier,user.UserId.ToString())
+                    };
+
+                    var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                    // Kullanýcýyý sisteme dahil ediyoruz
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+                        new ClaimsPrincipal(claimsIdentity),
+                        new AuthenticationProperties
+                        {
+                            IsPersistent = model.RememberMe
+                        });
                     return RedirectToAction("Index", "Project");
                 }
 
                 ModelState.AddModelError(string.Empty, "Invalid login attempt.");
             }
 
-            ViewData["ErrorMessage"] = "Invalid login attempt. Please try again.";
             return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
@@ -88,7 +114,7 @@ namespace SmartAPIManager.Web.Controllers
                 bool isRegistered = await _userService.RegisterUserAsync(user);
                 if (isRegistered)
                 {
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Login", "Home");
                 }
                 else
                 {

@@ -14,5 +14,8 @@ namespace DBSmartAPIManager.DAL.Entities
         public string FileWay { get; set; }
         public byte[] FileContent { get; set; }
         public DateTime UploadDate { get; set; } = DateTime.Now;
+
+        // Navigation property for the related Project
+        public Project Project { get; set; }
     }
 }

@@ -64,7 +64,7 @@ namespace SmartAPIManager.Web.Controllers
 
         public async Task<IActionResult> Edit(int id)
         {
-            var project = await _projectService.GetByIdAsync(id);
+            var project = await _projectService.GetByIdAsync(id)??new Project() { ProjectId=0,UploadDate=DateTime.Now};
             if (project == null) 
             {
                 return NotFound();
@@ -74,12 +74,9 @@ namespace SmartAPIManager.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Project project)
+        public async Task<IActionResult> Edit( Project project)
         {
-            if (id != project.ProjectId)
-            {
-                return BadRequest();
-            }
+            
 
             if (ModelState.IsValid)
             {
