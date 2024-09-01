@@ -6,115 +6,39 @@
 }
 
 <h1>PROJECTS</h1>
+
 <div class="container">
-    <input type="text" id="filter" placeholder="Search projects...">
-    <ul id="project-list">
-        @foreach (var project in Model)
+
+    <!--Add Project Button-->
+    <form asp-action="Edit" asp-controller="Project" method="get" style="display:inline;">
+        <button type="submit" class="btn btn-primary">Add Project</button>
+    </form>
+
+    <input type="text" id ="filter" placeholder="Search projects..."/>
+
+    <ul id ="project-list">
+        @foreach(var project in Model)
         {
             <li>
                 <strong>@project.Name</strong>
-                
-                <!-- Details Button -->
-                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#project-details-modal"
-                        data-name="@project.Name" data-description="@project.Description"
-                        data-date="@project.UploadDate.ToString("yyyy-MM-dd")" data-file="@project.ProjectFile">
-                    Details
-                </button>
 
-                <!-- Edit Button -->
+                <!--Details Button-->
                 <form asp-action="Edit" asp-controller="Project" method="get" style="display:inline;">
                     <input type="hidden" name="id" value="@project.ProjectId" />
-                    <button type="submit" class="btn btn-warning">Edit</button>
+                    <button type="submit" class="btn btn-info">Details</button>
                 </form>
 
-                <!-- Delete Button -->
-                <button type="button" class="btn btn-danger delete-button" data-id="@project.ProjectId">Delete</button>
+                <!--Delete Button-->
+                <form asp-action="Delete" asp-controller="Project" method="post" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this project?');">
+                    <input type="hidden" name="id" value="@project.ProjectId"/>
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
 
             </li>
         }
-       
+
     </ul>
-    <!-- Add Project Button -->
-    <form asp-action="Create" asp-controller="Project" method="get" style="display:inline;">
-        <button type="submit" class="btn btn-primary">Add Project</button>
-    </form>
 </div>
-
-
-<!-- Details Modal -->
-<div id="project-details-modal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2>Project Details</h2>
-        <p><strong>Project Name:</strong><span id="detail-project-name"></span></p>
-        <p><strong>Description:</strong><span id="detail-project-description"></span></p>
-        <p><strong>Date:</strong><span id="detail-project-date"></span></p>
-        <p><strong>File:</strong><span id="detail-project-file"></span></p> <!-- Project File Eklendi -->
-    </div>
-</div>
-
-<!-- Delete Confirmation Modal -->
-<div id="delete-confirmation-modal" class="modal">
-    <div class="modal-content">
-        <span class="close-delete-modal">&times;</span>
-        <h2>Delete Confirmation</h2>
-        <p>Are you sure you want to delete this project?</p>
-        <form id="delete-confirmation-form" method="post">
-            <input type="hidden" id="delete-project-id" name="id" />
-            <button type="submit" class="btn btn-danger">Delete</button>
-            <button type="button" class="btn btn-secondary close-delete-modal">Cancel</button>
-        </form>
-    </div>
-</div>
-
-
-
-@* <!-- Modal Structure -->
-<div id="add-project-modal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2>Add Project</h2>
-        <label for="project-name">Project Name:</label>
-        <input type="text" id="project-name" placeholder="Enter project name">
-        <label for="project-description">Project Description:</label>
-        <textarea id="project-description" placeholder="Enter project description"></textarea>
-        <label for="project-file">Project File:</label>
-        <input type="file" id="project-file">
-        <label for="project-date">Date:</label>
-        <input type="date" id="project-date">
-        <button id="save-project-btn">Save Project</button>
-    </div>
-</div>
-
-<!-- Edit Project Modal -->
-<div id="edit-project-modal" class="modal">
-    <div class="modal-content">
-        <span class="close-edit">&times;</span>
-        <h2>Edit Project</h2>
-        <label for="edit-project-name">Project Name:</label>
-        <input type="text" id="edit-project-name" placeholder="Enter project name">
-        <label for="edit-project-description">Project Description:</label>
-        <textarea id="edit-project-description" placeholder="Enter project description"></textarea>
-        <label for="edit-project-file">Project File:</label>
-        <input type="file" id="edit-project-file">
-        <label for="edit-project-date">Date:</label>
-        <input type="date" id="edit-project-date">
-        <button id="update-project-btn" onclick="window.location.href='@Url.Action("Edit", "Project", new { id = project.Id })'">Update Project</button>
-        
-    </div>
-</div>
-
-<!-- Project Details Modal -->
-<div id="project-details-modal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2>Project Details</h2>
-        <p><strong>Project Name:</strong><span id="detail-project-name"></span></p>
-        <p><strong>Description:</strong><span id="detail-project-description"></span></p>
-        <p><strong>Date:</strong><span id="detail-project-date"></span></p>
-        <p><strong>File:</strong><span id="detail-project-file"></span></p>
-    </div>
-</div> *@
 
 @section scripts {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>

@@ -1,6 +1,7 @@
-﻿ using DBSmartAPIManager.DAL.Entities;
+﻿using DBSmartAPIManager.DAL.Entities;
 using DBSmartAPIManager.DAL.Services;
 using Microsoft.AspNetCore.Mvc;
+using SmartAPIManager.Web.Models;
 
 namespace SmartAPIManager.Web.Controllers
 {
@@ -10,7 +11,7 @@ namespace SmartAPIManager.Web.Controllers
         private readonly UserService _userService;
 
         // Constructor
-        public ProjectController(ProjectService projectService,UserService userService)
+        public ProjectController(ProjectService projectService, UserService userService)
         {
             _projectService = projectService;
             _userService = userService;
@@ -64,28 +65,104 @@ namespace SmartAPIManager.Web.Controllers
 
         public async Task<IActionResult> Edit(int id)
         {
-            var project = await _projectService.GetByIdAsync(id)??new Project() { ProjectId=0,UploadDate=DateTime.Now};
-            if (project == null) 
+            var project = await _projectService.GetByIdAsync(id) ?? new Project() { ProjectId = 0, UploadDate = DateTime.Now };
+            if (project == null)
             {
                 return NotFound();
             }
             return View(project);
         }
 
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit( Project project)
+        public async Task<IActionResult> Edit( ProjectEditModel model)
         {
-            
+            // Oturum açmış kullanıcının e-posta adresini al
+            var email = User.Identity.Name;
+            var user = await _userService.SelectAsync(u => u.Email == email);
 
-            if (ModelState.IsValid)
+            if (user != null)
             {
-                await _projectService.UpdateAsync(project);
-                return RedirectToAction(nameof(Index));
+                // UserId'yi ve User nesnesini projeye set et
+                var project = model.ProjectId > 0 ? await _projectService.GetByIdAsync(model.ProjectId) : new Project();
+
+                project.User = user;
+
+                // User entity'sini yeniden eklemeyi önlemek için Attach metodunu kullanın
+                _projectService.Attach(user);
+
+                if (ModelState.IsValid)
+                {
+
+                    project.Name = model.Name;
+                    project.Description = model.Description;
+                    project.UploadDate = model.UploadDate;
+
+                    //Eğer project.ProjectFile listesi null ise başlatılır
+                    project.ProjectFile = project.ProjectFile ?? new List<ProjectFile>();
+
+
+                    //ProjectFile alanını işleme 
+                    if(model.ProjectFile != null && model.ProjectFile.Any())
+                    {
+
+                        var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads");
+                        if (!Directory.Exists(uploadsFolder))
+                        {
+                            Directory.CreateDirectory(uploadsFolder);
+                        }
+
+                        foreach(var formFile in model.ProjectFile)
+                        {
+                            if(formFile.Length > 0)
+                            {
+                                var filePath = Path.Combine(uploadsFolder, formFile.FileName);
+
+                                using(var stream = new FileStream(filePath, FileMode.Create))
+                                {
+                                    await formFile.CopyToAsync(stream);
+                                }
+
+                                var fileUrl = $"/uploads/{formFile.FileName}";
+
+                                var projectFile = new ProjectFile
+                                {
+                                    FileName = formFile.FileName,
+                                    FileWay = fileUrl,
+                                    UploadDate = DateTime.Now
+                                };
+
+                                project.ProjectFile.Add(projectFile);  //ProjectFile koleksiyonuna ekle
+                            }
+                        }
+                    }
+
+                   
+                    if (project.ProjectId == 0)
+                    {
+                        // Yeni proje ekleme işlemi
+                        await _projectService.SaveAsync(project);
+                    }
+                    else
+                    {
+                        // Mevcut projeyi güncelleme işlemi
+                        await _projectService.UpdateAsync(project);
+                    }
+
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            else
+            {
+                // Kullanıcı bilgisi alınamazsa hata ekle
+                ModelState.AddModelError("", "Kullanıcı bilgisi alınamadı.");
             }
 
-            return View(project);
+            // ModelState geçerli değilse formu yeniden yükle
+            return View(model);
         }
+
 
         public async Task<IActionResult> Delete(int id)
         {
@@ -104,8 +181,8 @@ namespace SmartAPIManager.Web.Controllers
             await _projectService.DeleteAsync(x => x.ProjectId == id);
             return RedirectToAction(nameof(Index));
         }
-        
-        
+
+
 
 
 

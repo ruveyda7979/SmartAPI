@@ -20,10 +20,10 @@ namespace DBSmartAPIManager.DAL.Entities
         public User User { get; set; }
 
         //Navigation property for related ProjectFiles
-        public ICollection<ProjectFile> ProjectFile {  get; set; }
+        public ICollection<ProjectFile> ProjectFile {  get; set; } = new List<ProjectFile>();
 
         // Navigation property for related ProjectJsons
-        public ICollection<ProjectJson> ProjectJson { get; set; }
+        public ICollection<ProjectJson> ProjectJson { get; set; } = new List<ProjectJson>();
 
     }
 }
