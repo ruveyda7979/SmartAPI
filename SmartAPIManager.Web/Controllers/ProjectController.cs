@@ -63,14 +63,46 @@ namespace SmartAPIManager.Web.Controllers
         }
 
 
-        public async Task<IActionResult> Edit(int id)
-        {
-            var project = await _projectService.GetByIdAsync(id) ?? new Project() { ProjectId = 0, UploadDate = DateTime.Now };
-            if (project == null)
+        public async Task<IActionResult> Edit(int? id)
+          {
+            if (id == null || id == 0)
             {
-                return NotFound();
+                // Yeni bir proje eklemek için boş bir model döndürür
+                return View(new ProjectEditModel
+                {
+                    ProjectId = 0, // Yeni bir proje olduğunda ProjectId 0 olarak ayarlanır
+                    UploadDate = DateTime.Now, // Varsayılan olarak mevcut tarih ayarlanır
+                    ProjectFile = new List<IFormFile>() // Boş listeyi başlattık
+                });
             }
-            return View(project);
+            else
+            {
+                // Mevcut bir projeyi düzenlemek için
+                var project = await _projectService.GetByIdAsync(id.Value);
+                if (project == null)
+                {
+                    return NotFound(); // Proje bulunamazsa 404 döndürür
+                }
+
+                // Mevcut proje verilerini ViewModel'e aktarır
+                var projectEditModel = new ProjectEditModel
+                {
+                    ProjectId = project.ProjectId,
+                    Name = project.Name,
+                    Description = project.Description,
+                    ExistingFiles = project.ProjectFile.ToList(),
+                    UploadDate = project.UploadDate
+                    // Gerekirse diğer alanları da burada set edebilirsiniz.
+                };
+                return View(projectEditModel);
+            }
+
+            //var project = await _projectService.GetByIdAsync(id) ?? new Project() { ProjectId = 0, UploadDate = DateTime.Now };
+            //if (project == null)
+            //{
+            //    return NotFound();
+            //}
+            //return View(project);
         }
 
 

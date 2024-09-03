@@ -7,6 +7,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using DBSmartAPIManager.DAL.Entities;
 
 
 namespace DBSmartAPIManager.DAL.Context
@@ -99,11 +100,37 @@ namespace DBSmartAPIManager.DAL.Context
 
         public async Task DeleteAsync(Expression<Func<T, bool>>? paramerts = null, bool autoSave = true)
         {
-            var ent = await SelectAsync(paramerts);
-            if (ent != null)
+            //var ent = await SelectAsync(paramerts);
+            //if (ent != null)
+            //{
+            //    dbSet.Remove(ent);
+            //    if (autoSave) await _context.SaveChangesAsync();
+            //}
+
+            // İlk olarak, silinecek entity'yi ve ilişkili ProjectFile kayıtlarını getiriyoruz
+            // İlk olarak, silinecek entity'yi ve ilişkili ProjectFile kayıtlarını getiriyoruz
+            // İlk olarak, silinecek entity'yi ve ilişkili ProjectFile kayıtlarını getiriyoruz
+            var entity = await dbSet
+                .Include(p => (p as Project).ProjectFile) // İlişkili ProjectFile'ları yükle
+                .FirstOrDefaultAsync(paramerts); // Burada paramerts kullanılıyor
+
+            if (entity != null)
             {
-                dbSet.Remove(ent);
-                if (autoSave) await _context.SaveChangesAsync();
+                // İlişkili ProjectFile kayıtlarını sil
+                if (entity is Project project && project.ProjectFile != null && project.ProjectFile.Any())
+                {
+                    // ProjectFile'ları silmek için doğru dbSet'i kullanıyoruz
+                    _context.Set<ProjectFile>().RemoveRange(project.ProjectFile);
+                }
+
+                // Ana entity'yi sil
+                dbSet.Remove(entity);
+
+                // Değişiklikleri kaydet
+                if (autoSave)
+                {
+                    await _context.SaveChangesAsync();
+                }
             }
         }
 
@@ -137,7 +164,16 @@ namespace DBSmartAPIManager.DAL.Context
 
         public async Task<T> GetByIdAsync(int id)
         {
-            return await dbSet.FindAsync(id);
+            if (typeof(T) == typeof(Project))
+            {
+                return await dbSet
+                    .Include("ProjectFile")  // ProjectFile'ı yükler
+                    .FirstOrDefaultAsync(entity => EF.Property<int>(entity, "ProjectId") == id) as T;
+            }
+            else
+            {
+                return await dbSet.FindAsync(id);
+            }
         }
 
         public Task<IEnumerable<T>> GetByForeignKeyAsync(int foreignKeyId)

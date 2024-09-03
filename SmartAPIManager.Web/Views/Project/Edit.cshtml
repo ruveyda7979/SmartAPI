@@ -1,4 +1,5 @@
-﻿@model DBSmartAPIManager.DAL.Entities.Project
+﻿@model SmartAPIManager.Web.Models.ProjectEditModel
+
 
 @{
     ViewData["Title"] = Model.ProjectId == 0 ? "Create Project" : "Edit Project";
@@ -8,10 +9,12 @@
 <div class="container create-project-page">
     <h2>@(Model.ProjectId == 0 ? "Create Project" : "Edit Project")</h2>
 
-    <!-- Hidden Input for ProjectId -->
-    <input type="hidden" name="ProjectId" value="@Model.ProjectId" />
+    
+
 
     <form asp-action="Edit" method="post" enctype="multipart/form-data">
+
+        <input type="hidden" name="ProjectId" value="@Model.ProjectId" />
 
         
 
@@ -28,10 +31,10 @@
         <div class="form-group">
             <label for="project-file">Project File:</label>
             <input type="file" id=" project-file" name="ProjectFile" multiple class="form-control" />
-            @if (Model.ProjectFile != null && Model.ProjectFile.Any())
+            @if (Model.ExistingFiles != null && Model.ExistingFiles.Any())
             {
                 <ul>
-                    @foreach (var file in Model.ProjectFile)
+                    @foreach (var file in Model.ExistingFiles)
                     {
                         <li>@file.FileName</li>
                     }
