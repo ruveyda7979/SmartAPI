@@ -1,6 +1,9 @@
 ﻿using DBSmartAPIManager.DAL.Entities;
 using DBSmartAPIManager.DAL.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis;
+using SmartAPIManager.Web.Models;
+using System.Linq;
 
 namespace SmartAPIManager.Web.Controllers
 {
@@ -13,82 +16,103 @@ namespace SmartAPIManager.Web.Controllers
             
         }
 
-        //Get:ProjectJson
+        //Get:ProjectJson/Index?projectId=1
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int projectId)
         {
-            var projectJsons = await _projectJsonService.GetAllAsync();
-            return View(projectJsons);
+            var projectJsons = await _projectJsonService.SelectManyAsync(x => x.ProjectId == projectId);
+            var model = new ProjectJsonViewModel
+            {
+                ProjectId = projectId,
+                JsonList = projectJsons?.ToList() ?? new List<ProjectJson>() //Eğer null ise boş liste döner
+            };
+            return View(model);
         }
 
-        //Get:Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-        //Post
+        //Save JSON (Create or Update)
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(ProjectJson projectJson)
+        public async Task<IActionResult> SaveJson(ProjectJsonViewModel model)
         {
             if (ModelState.IsValid)
             {
-                await _projectJsonService.SaveAsync(projectJson);
-                return RedirectToAction("Index");
+                if (model.ProjectJsonId == 0)
+                {
+                    var projectJson = new ProjectJson
+                    {
+                        ProjectId = model.ProjectId,
+                        JsonName = model.JsonName,
+                        UploadDate = model.Date,
+                        RequestUrl = model.RequestURL,
+                        RelatedTable = model.RelatedTable,
+                        Content = model.Content,
+                        SendPattern = model.SendPattern,
+                        ReceivedPattern = model.ReceivedPattern,
+
+                    };
+                    await _projectJsonService.SaveAsync(projectJson);
+                }
+                else
+                {
+                    var projectJson = await _projectJsonService.GetByIdAsync(model.ProjectJsonId);
+                    if(projectJson != null)
+                    {
+                        projectJson.JsonName = model.JsonName;
+                        projectJson.UploadDate = model.Date;
+                        projectJson.RequestUrl = model.RequestURL;
+                        projectJson.RelatedTable = model.RelatedTable;
+                        projectJson.Content = model.Content;
+                        projectJson.SendPattern = model.SendPattern;
+                        projectJson.ReceivedPattern = model.ReceivedPattern;
+                        await _projectJsonService.UpdateAsync(projectJson);
+                    }
+
+                }
+
+                return RedirectToAction("Index", new {ProjectId = model.ProjectId});
             }
-            return View(projectJson);
+
+            return View("Index",model);
         }
 
-        //Get:Edit
-
-        public async Task<IActionResult> Edit(int id)
+        //Edit JSON
+        [HttpGet]
+        public async Task<IActionResult>Edit(int id)
         {
             var projectJson = await _projectJsonService.GetByIdAsync(id);
-            if (projectJson == null) 
-            {
-                return NotFound();  
-            }
-            return View(projectJson);
-        }
-
-        //Post:Edit
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-
-        public async Task<IActionResult> Edit(int id, ProjectJson projectJson)
-        {
-            if(id != projectJson.ProjectJsonId)
-            {
-                return BadRequest();
-            }
-            if(ModelState.IsValid)
-            {
-                await _projectJsonService.UpdateAsync(projectJson);
-                return RedirectToAction(nameof(Index));
-            }
-            return View(projectJson);
-
-        }
-
-        //Get:Delete
-        public async Task<IActionResult> Delete(int id)
-        {
-            var projectJsons = await _projectJsonService.GetByIdAsync(id);
-            if(projectJsons == null)
+            if(projectJson == null)
             {
                 return NotFound();
             }
-            return View(projectJsons);
+
+            var model = new ProjectJsonViewModel
+            {
+                ProjectJsonId = projectJson.ProjectJsonId,
+                ProjectId = projectJson.ProjectId,
+                JsonName = projectJson.JsonName,
+                Date = projectJson.UploadDate,
+                RequestURL = projectJson.RequestUrl,
+                RelatedTable = projectJson.RelatedTable,
+                Content = projectJson.Content,
+                SendPattern = projectJson.SendPattern,
+                ReceivedPattern = projectJson.ReceivedPattern,
+            };
+            return View("Index",model);
         }
 
-        //Post:Delete
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
 
-        public async Task<IActionResult> DeleteConfirmed(int id) 
+        //Delete JSON
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult>Delete(int id)
         {
-            await _projectJsonService.DeleteAsync(x => x.ProjectJsonId == id);
-            return RedirectToAction(nameof(Index));
+            var projectJson = await _projectJsonService.GetByIdAsync(id);
+            if (projectJson != null)
+            {
+                await _projectJsonService.DeleteAsync(x => x.ProjectJsonId == id);
+            }
+
+            return RedirectToAction("Index", new { projectId = projectJson.ProjectId });
         }
 
 

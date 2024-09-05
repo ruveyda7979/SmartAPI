@@ -11,6 +11,8 @@ namespace DBSmartAPIManager.DAL.Context
     public interface IRepository<T> where T : class,new()
     {
         Task<T?> SelectAsync(Expression<Func<T, bool>> paramerts);
+        Task<IEnumerable<T>> SelectManyAsync(Expression<Func<T, bool>>? paramerts = null);
+
         Task<IEnumerable<T>> DataSourceAsync(Expression<Func<T, bool>> paramerts);
         Task<IQueryable<T>> SQLQueryAsync(string sql, params SqlParameter[] paramerts);
         Task<IEnumerable<T>> ListClonAsync(IEnumerable<T> oldList);

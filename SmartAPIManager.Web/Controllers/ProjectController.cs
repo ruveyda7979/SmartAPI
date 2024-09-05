@@ -23,6 +23,12 @@ namespace SmartAPIManager.Web.Controllers
             return View(projects);
         }
 
+
+        //New Action: Projeye tıklandığında JSON sayfasına yönlendirme
+        public IActionResult GoToProjectJson(int projectId)
+        {
+            return RedirectToAction("Index","ProjectJson", new {projectId});
+        }
         public IActionResult Create()
         {
             return View();

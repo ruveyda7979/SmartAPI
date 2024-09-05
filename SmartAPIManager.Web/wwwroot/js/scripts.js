@@ -114,15 +114,10 @@ document.addEventListener('DOMContentLoaded', function () {
     // Projects.html sayfasına özgü kodlar
     const projectList = document.getElementById('project-list');
     const filterInput = document.getElementById('filter');
-    const projectDetailsModal = document.getElementById('project-details-modal');
+    
 
-    if (projectList && filterInput && projectDetailsModal) {
-        const closeDetailsModal = projectDetailsModal.querySelector('.close');
-
-        // Modal'ı kapatma işlevi
-        closeDetailsModal.addEventListener('click', () => {
-            projectDetailsModal.style.display = 'none';
-        });
+    if (projectList && filterInput ) {
+        
 
         // Filter işlemi
         filterInput.addEventListener('keyup', () => {
@@ -134,41 +129,10 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
 
-        // Details modal'ına verileri yerleştirme
-        $('#project-details-modal').on('show.bs.modal', function (event) {
-            const button = $(event.relatedTarget);
-            const name = button.data('name');
-            const description = button.data('description');
-            const date = button.data('date');
-            const file = button.data('file'); // Project File Eklendi
-
-            const modal = $(this);
-            modal.find('#detail-project-name').text(name);
-            modal.find('#detail-project-description').text(description);
-            modal.find('#detail-project-date').text(date);
-            modal.find('#detail-project-file').text(file); // Project File Eklendi
-        });
+        
     }
 
-    // Delete işlemi için kodlar
-    $(document).ready(function () {
-        // Delete button click event
-        $('.delete-button').on('click', function () {
-            var projectId = $(this).data('id'); // Butondan ID'yi al
-            $('#delete-project-id').val(projectId); // ID'yi modal formuna yerleştir
-            $('#delete-confirmation-modal').show(); // Modalı göster
-        });
-
-        // Close modal event
-        $('.close-delete-modal').on('click', function () {
-            $('#delete-confirmation-modal').hide(); // Modalı kapat
-        });
-
-        // Form submit işlemi
-        $('#delete-confirmation-form').on('submit', function () {
-            $('#delete-confirmation-modal').hide(); // Modalı kapat
-        });
-    });
+   
 
     // JSON Yönetim sayfasına özgü kodlar
     const jsonContainer = document.getElementById('json-container');
@@ -181,11 +145,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const backToProjectsBtn = document.getElementById('back-to-projects-btn');
         const newJsonBtn = document.getElementById('new-json-btn');
 
-        //if (backToProjectsBtn) {
-        //    backToProjectsBtn.addEventListener('click', () => {
-        //        window.location.href = projectsPageUrl; 
-        //    });
-        //}
+      
 
         newJsonBtn.addEventListener('click', () => {
             clearForm();

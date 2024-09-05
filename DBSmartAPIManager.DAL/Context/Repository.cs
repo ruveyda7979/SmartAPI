@@ -27,6 +27,13 @@ namespace DBSmartAPIManager.DAL.Context
             var result = paramerts != null ? await dbSet.FirstOrDefaultAsync(paramerts) : await dbSet.FirstOrDefaultAsync();
             return result;
         }
+
+        public async Task<IEnumerable<T>> SelectManyAsync(Expression<Func<T, bool>>? paramerts = null)
+        {
+            var result = paramerts != null ? await dbSet.Where(paramerts).ToListAsync() : await dbSet.ToListAsync();
+            return result;
+        }
+
         public async Task<IEnumerable<T>> DataSourceAsync(Expression<Func<T, bool>>? paramerts = null)
         {
             var result = paramerts != null ? await dbSet.Where(paramerts).ToListAsync() : await dbSet.ToListAsync();

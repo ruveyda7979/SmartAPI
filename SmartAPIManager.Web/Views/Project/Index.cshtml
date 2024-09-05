@@ -22,6 +22,12 @@
             <li>
                 <strong>@project.Name</strong>
 
+                <!--Proje JSON sayfasına yönlendirme butonu-->
+                <form asp-action="GoToProjectJson" asp-controller="Project" method="get">
+                    <input type="hidden" name="projectId" value="@project.ProjectId" />
+                    <button type="submit" class="btn btn-info">View Project JSONs</button>
+                </form>
+
                 <!--Details Button-->
                 <form asp-action="Edit" asp-controller="Project" method="get" style="display:inline;">
                     <input type="hidden" name="id" value="@project.ProjectId" />
