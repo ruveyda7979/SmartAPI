@@ -103,6 +103,7 @@ namespace DBSmartAPIManager.DAL.Context
         {
             dbSet.Attach(val);
             _context.Entry(val).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(Expression<Func<T, bool>>? paramerts = null, bool autoSave = true)

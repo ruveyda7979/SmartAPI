@@ -14,6 +14,7 @@ namespace SmartAPIManager.Web.Models
         public string SendPattern { get; set; }
         public string ReceivedPattern { get; set; }
 
+
         public List<ProjectJson>JsonList { get; set; } = new List<ProjectJson>(); // Listeyi başlattık
     }
 }

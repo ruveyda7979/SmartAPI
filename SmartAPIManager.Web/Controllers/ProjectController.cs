@@ -1,6 +1,7 @@
 ﻿using DBSmartAPIManager.DAL.Entities;
 using DBSmartAPIManager.DAL.Services;
 using Microsoft.AspNetCore.Mvc;
+using NuGet.Protocol.Core.Types;
 using SmartAPIManager.Web.Models;
 
 namespace SmartAPIManager.Web.Controllers
@@ -34,39 +35,7 @@ namespace SmartAPIManager.Web.Controllers
             return View();
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Project project)
-        {
-            if (ModelState.IsValid)
-            {
-                // Oturum açmış kullanıcının e-posta adresini al
-                var email = User.Identity.Name;
-
-                // Kullanıcının UserId'sini al
-                var user = await _userService.SelectAsync(u => u.Email == email);
-
-                if (user != null)
-                {
-                    // Projeye oturum açmış kullanıcının UserId'sini ekle
-                    project.UserId = user.UserId;
-
-                    // Projeyi veritabanına kaydet
-                    await _projectService.SaveAsync(project);
-
-                    // Index sayfasına yönlendir
-                    return RedirectToAction(nameof(Index));
-                }
-                else
-                {
-                    // Kullanıcı bulunamazsa bir hata mesajı göster
-                    ModelState.AddModelError("", "Kullanıcı bilgisi alınamadı.");
-                }
-            }
-
-            // ModelState geçerli değilse veya kullanıcı bulunamadıysa formu yeniden göster
-            return View(project);
-        }
+        
 
 
         public async Task<IActionResult> Edit(int? id)
@@ -114,90 +83,102 @@ namespace SmartAPIManager.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit( ProjectEditModel model)
+        public async Task<IActionResult> Edit(ProjectEditModel model)
         {
-            // Oturum açmış kullanıcının e-posta adresini al
+            // Kullanıcının e-posta adresini alıyoruz
             var email = User.Identity.Name;
             var user = await _userService.SelectAsync(u => u.Email == email);
 
-            if (user != null)
+            if (user == null)
             {
-                // UserId'yi ve User nesnesini projeye set et
-                var project = model.ProjectId > 0 ? await _projectService.GetByIdAsync(model.ProjectId) : new Project();
-
-                project.User = user;
-
-                // User entity'sini yeniden eklemeyi önlemek için Attach metodunu kullanın
-                _projectService.Attach(user);
-
-                if (ModelState.IsValid)
-                {
-
-                    project.Name = model.Name;
-                    project.Description = model.Description;
-                    project.UploadDate = model.UploadDate;
-
-                    //Eğer project.ProjectFile listesi null ise başlatılır
-                    project.ProjectFile = project.ProjectFile ?? new List<ProjectFile>();
-
-
-                    //ProjectFile alanını işleme 
-                    if(model.ProjectFile != null && model.ProjectFile.Any())
-                    {
-
-                        var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads");
-                        if (!Directory.Exists(uploadsFolder))
-                        {
-                            Directory.CreateDirectory(uploadsFolder);
-                        }
-
-                        foreach(var formFile in model.ProjectFile)
-                        {
-                            if(formFile.Length > 0)
-                            {
-                                var filePath = Path.Combine(uploadsFolder, formFile.FileName);
-
-                                using(var stream = new FileStream(filePath, FileMode.Create))
-                                {
-                                    await formFile.CopyToAsync(stream);
-                                }
-
-                                var fileUrl = $"/uploads/{formFile.FileName}";
-
-                                var projectFile = new ProjectFile
-                                {
-                                    FileName = formFile.FileName,
-                                    FileWay = fileUrl,
-                                    UploadDate = DateTime.Now
-                                };
-
-                                project.ProjectFile.Add(projectFile);  //ProjectFile koleksiyonuna ekle
-                            }
-                        }
-                    }
-
-                   
-                    if (project.ProjectId == 0)
-                    {
-                        // Yeni proje ekleme işlemi
-                        await _projectService.SaveAsync(project);
-                    }
-                    else
-                    {
-                        // Mevcut projeyi güncelleme işlemi
-                        await _projectService.UpdateAsync(project);
-                    }
-
-                    return RedirectToAction(nameof(Index));
-                }
-            }
-            else
-            {
-                // Kullanıcı bilgisi alınamazsa hata ekle
+                // Kullanıcı bilgisi alınamazsa hata ekliyoruz
                 ModelState.AddModelError("", "Kullanıcı bilgisi alınamadı.");
+                return View(model);
             }
 
-            // ModelState geçerli değilse formu yeniden yükle
+            // Mevcut proje mi güncelleniyor yoksa yeni proje mi oluşturuluyor, kontrol ediyoruz
+            var project = model.ProjectId > 0
+                ? await _projectService.GetByIdAsync(model.ProjectId)
+                : new Project();
+
+            if (project == null)
+            {
+                return NotFound();
+            }
+
+            // Kullanıcıyı proje ile ilişkilendiriyoruz
+            project.User = user;
+            _projectService.Attach(user);
+
+            if (ModelState.IsValid)
+            {
+                // Proje bilgilerini güncelliyoruz
+                project.Name = model.Name;
+                project.Description = model.Description;
+                project.UploadDate = model.UploadDate;
+
+                // Mevcut proje dosyalarını alıyoruz
+                var existingProject = await _projectService.GetByIdAsync(model.ProjectId);
+                project.ProjectFile = existingProject?.ProjectFile ?? new List<ProjectFile>();
+
+                // Dosya yükleme işlemi
+                if (model.ProjectFile != null && model.ProjectFile.Any())
+                {
+                    var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads");
+                    if (!Directory.Exists(uploadsFolder))
+                    {
+                        Directory.CreateDirectory(uploadsFolder);
+                    }
+
+                    foreach (var formFile in model.ProjectFile)
+                    {
+                        if (formFile.Length > 0)
+                        {
+                            var filePath = Path.Combine(uploadsFolder, formFile.FileName);
+
+                            // Dosyayı yüklüyoruz
+                            using (var stream = new FileStream(filePath, FileMode.Create))
+                            {
+                                await formFile.CopyToAsync(stream);
+                            }
+
+                            var projectFile = new ProjectFile
+                            {
+                                FileName = formFile.FileName,
+                                FileWay = $"/uploads/{formFile.FileName}",
+                                UploadDate = DateTime.Now
+                            };
+
+                            // Yeni dosyayı mevcut ProjectFile listesine ekliyoruz
+                            project.ProjectFile.Add(projectFile);
+                        }
+                    }
+                }
+                else
+                {
+                    // Eğer dosya eklenmiyorsa mevcut dosyaların korunmasını sağlıyoruz
+                    project.ProjectFile = existingProject?.ProjectFile ?? new List<ProjectFile>();
+                }
+
+                // Proje kaydetme işlemi: Yeni proje mi yoksa mevcut proje mi?
+                if (model.ProjectId == 0)
+                {
+                    // Yeni proje ekleme işlemi
+                    await _projectService.SaveAsync(project);
+                }
+                else
+                {
+                    // Mevcut projeyi güncelleme işlemi
+                    await _projectService.UpdateAsync(project);
+                }
+
+                // Değişiklikleri veritabanına kaydediyoruz
+                await _projectService.SaveChangesAsync(); // Bu önemli, son değişiklikleri mutlaka kaydediyoruz.
+
+                return RedirectToAction(nameof(Index));
+            }
+
+            // ModelState geçerli değilse formu yeniden yüklüyoruz
             return View(model);
         }
 

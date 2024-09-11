@@ -7,14 +7,14 @@
 
 
 
-<h1>JSONS</h1>
+<h1>JSON for Project:@Model.ProjectId </h1>
 @* <h2>Project: @ViewBag.ProjectName</h2> *@
 
 <div id="project-name-container" class="project-name-container"></div>
 
 <div id="json-container" class="container">
     <div class="left-column">
-        <form method="get" asp-action="Create">
+        <form method="get" asp-action="Create" asp-route-projectId ="@Model.ProjectId">
         <button id="new-json-btn" type="submit">New</button>
         </form>
 
@@ -32,6 +32,8 @@
     </div>
     <div class="right-column">
         <form asp-action="SaveJson" method="post">
+            <input type="hidden" id="projectId" name="ProjectId" value="@Model.ProjectId" />
+
             <input type="hidden" id="json-id" name="ProjectJsonId" value="@Model.ProjectJsonId"/>
             <div class="form-group">
                 <div form-item>
@@ -70,7 +72,7 @@
                         <option value="clike">C/C++/Java/C#</option>
                         <option value="dart">Dart</option>
                     </select>
-                    <textarea id ="sent-pattern" class="editor" name="SentPattern">@Model.SendPattern</textarea>
+                    <textarea id ="sent-pattern" class="editor" name="SendPattern">@Model.SendPattern</textarea>
 
                 </div>
 
