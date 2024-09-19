@@ -3,24 +3,23 @@
 @{
     ViewData["Title"] = "JSON";
     ViewData["BodyClass"] = "json-page";
+    Layout = "_Layout";
 }
 
 
 
-<h1>JSON for Project:@Model.ProjectId </h1>
-@* <h2>Project: @ViewBag.ProjectName</h2> *@
-
-<div id="project-name-container" class="project-name-container"></div>
+<h1>JSON for Project:@Model.ProjectId</h1>
 
 <div id="json-container" class="container">
+    <!-- Sol Kolon -->
     <div class="left-column">
-        <form method="get" asp-action="Create" asp-route-projectId ="@Model.ProjectId">
-        <button id="new-json-btn" type="submit">New</button>
+        <form method="get" asp-action="Create" asp-route-projectId="@Model.ProjectId">
+            <button id="new-json-btn" type="submit">New</button>
         </form>
 
         <input type="text" id="search-json" placeholder="Search JSON by name...">
         <ul id="json-list">
-            @foreach(var json in Model.JsonList)
+            @foreach (var json in Model.JsonList)
             {
                 <li>
                     <form method="get" asp-action="Edit" asp-route-id="@json.ProjectJsonId">
@@ -30,84 +29,82 @@
             }
         </ul>
     </div>
+
+    <!-- Sağ Kolon -->
     <div class="right-column">
         <form asp-action="SaveJson" method="post">
             <input type="hidden" id="projectId" name="ProjectId" value="@Model.ProjectId" />
+            <input type="hidden" id="json-id" name="ProjectJsonId" value="@Model.ProjectJsonId" />
 
-            <input type="hidden" id="json-id" name="ProjectJsonId" value="@Model.ProjectJsonId"/>
+            <!-- JSON Name ve Date Girişi -->
             <div class="form-group">
-                <div form-item>
+                <div class="form-item">
+                    <!-- Eksik class eklendi -->
                     <label for="json-name">JSON Name:</label>
-                    <input type="text" id ="json-name" name="JsonName" value="@Model.JsonName" />
+                    <input type="text" id="json-name" name="JsonName" value="@Model.JsonName" />
                 </div>
 
                 <div class="form-item">
+                    <!-- Eksik class eklendi -->
                     <label for="date">Date:</label>
-                    <input type="date" id ="date" name="Date" value="@Model.Date.ToString("yyyy-MM-dd")" />
+                    <input type="date" id="date" name="Date" value="@Model.Date.ToString("yyyy-MM-dd")" />
                 </div>
-
             </div>
 
+            <!-- Request URL ve Related Table Girişi -->
             <div class="form-group">
                 <div class="form-item">
-                    <label for="request-url">Request URL</label>
-                    <input type="text" id ="request-url" name="RequestURL" value="@Model.RequestURL"/>
+                    <!-- Eksik class eklendi -->
+                    <label for="request-url">Request URL:</label>
+                    <input type="text" id="request-url" name="RequestURL" value="@Model.RequestURL" />
                 </div>
 
-                <div form-item>
+                <div class="form-item">
+                    <!-- Eksik class eklendi -->
                     <label for="related-table">Related Table:</label>
-                    <input type="text" id ="related-table" name="RelatedTable" value="@Model.RelatedTable"/>
-
+                    <input type="text" id="related-table" name="RelatedTable" value="@Model.RelatedTable" />
                 </div>
-
             </div>
+
+            <!-- Content Girişi -->
             <label for="content">Content:</label>
-            <textarea id ="content" name="Content">@Model.Content</textarea>
+            <textarea id="content" name="Content">@Model.Content</textarea>
+
+            <!-- Sent Pattern ve Received Pattern Girişi -->
             <div class="pattern-container">
                 <div class="editor-wrapper">
                     <label for="sent-pattern">Sent Pattern:</label>
-                    <select id ="sent-pattern-language" name="SentPatternLanguage">
+                    <select id="sent-pattern-language" name="SentPatternLanguage">
                         <option value="javascript">JavaScript</option>
                         <option value="python">Python</option>
                         <option value="clike">C/C++/Java/C#</option>
                         <option value="dart">Dart</option>
                     </select>
-                    <textarea id ="sent-pattern" class="editor" name="SendPattern">@Model.SendPattern</textarea>
-
+                    <textarea id="sent-pattern" class="editor" name="SendPattern">@Model.SendPattern</textarea>
                 </div>
 
                 <div class="editor-wrapper">
-                    <label for="received-pattern"> Received Pattern:</label>
-                    <select id ="received-pattern-language" name="ReceivedPatternLanguage">
+                    <label for="received-pattern">Received Pattern:</label>
+                    <select id="received-pattern-language" name="ReceivedPatternLanguage">
                         <option value="javascript">JavaScript</option>
                         <option value="python">Python</option>
                         <option value="clike">C/C++/Java/C#</option>
                         <option value="dart">Dart</option>
                     </select>
-                    <textarea id ="received-pattern" class="editor" name="ReceivedPattern">@Model.ReceivedPattern</textarea>
-
+                    <textarea id="received-pattern" class="editor" name="ReceivedPattern">@Model.ReceivedPattern</textarea>
                 </div>
-
             </div>
 
+            <!-- Save ve Back to Projects Butonları -->
             <div class="button-container">
-                <button id ="save-btn" type="submit" class="btn btn-primary" >Save</button>
-
-                <!--Back To Projects Button-->
-                <a asp-action="Index" asp-controller="Project" class="button-link" id ="back-to-projects-link">Back to Projects</a>
-
+                <button id="save-btn" type="submit" class="btn btn-primary">Save</button>
+                <a asp-action="Index" asp-controller="Project" class="button-link" id="back-to-projects-link">Back to Projects</a>
             </div>
-
         </form>
-        
     </div>
 </div>
 
 @section scripts {
-    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/javascript/javascript.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/python/python.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/clike/clike.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/dart/dart.min.js"></script>
 }

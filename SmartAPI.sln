@@ -5,7 +5,7 @@ VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DBSmartAPIManager.DAL", "DBSmartAPIManager.DAL\DBSmartAPIManager.DAL.csproj", "{49E5AB02-E058-464E-BB08-00946B0D58A0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartAPIManager.Web", "SmartAPIManager.Web\SmartAPIManager.Web.csproj", "{85110CB3-3DD0-49F8-9DC2-1D0340F78965}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartAPIManager.Web", "SmartAPIManager.Web\SmartAPIManager.Web.csproj", "{85110CB3-3DD0-49F8-9DC2-1D0340F78965}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

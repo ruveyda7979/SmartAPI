@@ -29,19 +29,26 @@
         </div>
 
         <div class="form-group">
-            <label for="project-file">Project File:</label>
-            <input type="file" id=" project-file" name="ProjectFile" multiple class="form-control" />
+            <label for="project-file">Project Files:</label>
+            <input type="file" id="project-file" name="ProjectFile" multiple class="form-control" />
             @if (Model.ExistingFiles != null && Model.ExistingFiles.Any())
             {
                 <ul>
                     @foreach (var file in Model.ExistingFiles)
                     {
-                        <li>@file.FileName</li>
+                        <li>
+                            <a href="@file.FileWay" target="_blank">@file.FileName</a>
+                            <input type="checkbox" name="FilesToDelete" value="@file.ProjectFileId" /> Sil
+                        </li>
                     }
                 </ul>
-            } 
+            }
 
+            <input type="hidden" id="project-name" name="ExistingFiles" class="form-control" value="@Model.Name" />
         </div>
+
+
+        
 
         <div class="form-group">
             <label for="project-date">Date:</label>

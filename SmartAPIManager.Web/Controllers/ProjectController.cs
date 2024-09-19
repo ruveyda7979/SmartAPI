@@ -1,6 +1,7 @@
-﻿using DBSmartAPIManager.DAL.Entities;
+﻿  using DBSmartAPIManager.DAL.Entities;
 using DBSmartAPIManager.DAL.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using NuGet.Protocol.Core.Types;
 using SmartAPIManager.Web.Models;
 
@@ -53,7 +54,7 @@ namespace SmartAPIManager.Web.Controllers
             else
             {
                 // Mevcut bir projeyi düzenlemek için
-                var project = await _projectService.GetByIdAsync(id.Value);
+                var project = await _projectService.GetByIdWithFilesAsync(id.Value);
                 if (project == null)
                 {
                     return NotFound(); // Proje bulunamazsa 404 döndürür
@@ -85,20 +86,18 @@ namespace SmartAPIManager.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(ProjectEditModel model)
         {
-            // Kullanıcının e-posta adresini alıyoruz
             var email = User.Identity.Name;
             var user = await _userService.SelectAsync(u => u.Email == email);
 
             if (user == null)
             {
-                // Kullanıcı bilgisi alınamazsa hata ekliyoruz
                 ModelState.AddModelError("", "Kullanıcı bilgisi alınamadı.");
                 return View(model);
             }
 
-            // Mevcut proje mi güncelleniyor yoksa yeni proje mi oluşturuluyor, kontrol ediyoruz
+            // Proje güncelleme veya yeni proje oluşturma
             var project = model.ProjectId > 0
-                ? await _projectService.GetByIdAsync(model.ProjectId)
+                ? await _projectService.GetByIdWithFilesAsync(model.ProjectId)
                 : new Project();
 
             if (project == null)
@@ -106,25 +105,45 @@ namespace SmartAPIManager.Web.Controllers
                 return NotFound();
             }
 
-            // Kullanıcıyı proje ile ilişkilendiriyoruz
             project.User = user;
             _projectService.Attach(user);
 
             if (ModelState.IsValid)
             {
-                // Proje bilgilerini güncelliyoruz
+                // Proje bilgilerini güncelle
                 project.Name = model.Name;
                 project.Description = model.Description;
                 project.UploadDate = model.UploadDate;
 
-                // Mevcut proje dosyalarını alıyoruz
-                var existingProject = await _projectService.GetByIdAsync(model.ProjectId);
-                project.ProjectFile = existingProject?.ProjectFile ?? new List<ProjectFile>();
+                // Silinecek dosyaları işleme alıyoruz
+                if (model.FilesToDelete != null && model.FilesToDelete.Any())
+                {
+                    var filesToRemove = project.ProjectFile
+                        .Where(f => model.FilesToDelete.Contains(f.ProjectFileId)) // File ID ile seçiyoruz
+                        .ToList();
 
-                // Dosya yükleme işlemi
+                    foreach (var fileToDelete in filesToRemove)
+                    {
+                        // Fiziksel dosyayı siliyoruz
+                        var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot" + fileToDelete.FileWay);
+                        if (System.IO.File.Exists(filePath))
+                        {
+                            System.IO.File.Delete(filePath); // Fiziksel dosyayı sil
+                        }
+
+                        // Veritabanından dosyayı sil
+                        await _projectService.RemoveFileAsync(fileToDelete); // Dosyayı veritabanından sil
+
+                    }
+
+                    // Değişiklikleri veritabanında kaydediyoruz
+                    await _projectService.SaveChangesAsync();
+                }
+
+                // Yeni dosyalar eklenmişse onları yükleyelim
                 if (model.ProjectFile != null && model.ProjectFile.Any())
                 {
-                    var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads");
+                    var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
                     if (!Directory.Exists(uploadsFolder))
                     {
                         Directory.CreateDirectory(uploadsFolder);
@@ -134,53 +153,48 @@ namespace SmartAPIManager.Web.Controllers
                     {
                         if (formFile.Length > 0)
                         {
-                            var filePath = Path.Combine(uploadsFolder, formFile.FileName);
+                            var uniqueFileName = Guid.NewGuid().ToString() + "_" + formFile.FileName;
+                            var filePath = Path.Combine(uploadsFolder, uniqueFileName);
 
-                            // Dosyayı yüklüyoruz
+                            // Dosyayı fiziksel olarak yükle
                             using (var stream = new FileStream(filePath, FileMode.Create))
                             {
                                 await formFile.CopyToAsync(stream);
                             }
 
+                            // Veritabanına yeni dosya kaydını ekle
                             var projectFile = new ProjectFile
                             {
-                                FileName = formFile.FileName,
-                                FileWay = $"/uploads/{formFile.FileName}",
-                                UploadDate = DateTime.Now
+                                FileName = uniqueFileName,
+                                FileWay = $"/uploads/{uniqueFileName}",
+                                UploadDate = DateTime.Now,
+                                Project = project
                             };
 
-                            // Yeni dosyayı mevcut ProjectFile listesine ekliyoruz
                             project.ProjectFile.Add(projectFile);
                         }
                     }
                 }
-                else
-                {
-                    // Eğer dosya eklenmiyorsa mevcut dosyaların korunmasını sağlıyoruz
-                    project.ProjectFile = existingProject?.ProjectFile ?? new List<ProjectFile>();
-                }
 
-                // Proje kaydetme işlemi: Yeni proje mi yoksa mevcut proje mi?
+                // Proje güncelleme veya yeni proje ekleme işlemi
                 if (model.ProjectId == 0)
                 {
-                    // Yeni proje ekleme işlemi
                     await _projectService.SaveAsync(project);
                 }
                 else
                 {
-                    // Mevcut projeyi güncelleme işlemi
                     await _projectService.UpdateAsync(project);
                 }
 
-                // Değişiklikleri veritabanına kaydediyoruz
-                await _projectService.SaveChangesAsync(); // Bu önemli, son değişiklikleri mutlaka kaydediyoruz.
+                await _projectService.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Index));
             }
 
-            // ModelState geçerli değilse formu yeniden yüklüyoruz
             return View(model);
         }
+
+
 
 
         public async Task<IActionResult> Delete(int id)
@@ -197,7 +211,8 @@ namespace SmartAPIManager.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            await _projectService.DeleteAsync(x => x.ProjectId == id);
+            // Servis katmanındaki metodu çağırıyoruz
+            await _projectService.DeleteProjectWithFilesAsync(id);
             return RedirectToAction(nameof(Index));
         }
 

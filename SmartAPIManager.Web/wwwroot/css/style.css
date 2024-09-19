@@ -150,9 +150,11 @@ body {
     align-items: center;
     width: 100%; /* Sayfanın genişliğine göre form ayarlanacak */
     padding: 20px;
+    padding-top: 100px;
 }
 
     .auth-page h2 {
+        text-align: center; /* Center the title */
         color: #1f1f1f;
         margin-bottom: 20px;
         font-size: 2rem;
@@ -160,12 +162,13 @@ body {
     }
 
     .auth-page form {
-        width: 100%; /* Form genişliği tam sayfa olacak */
-        max-width: 800px; /* Daha geniş bir maksimum genişlik ayarlandı */
+        width: 100%; /* Form should take the full width available */
+        max-width: 1800px; /* Adjusted to make it wider */
         background-color: #fff;
         padding: 50px;
         border-radius: 10px;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        margin-top: 20px; /* Add some space below the title */
     }
 
         .auth-page form div {
@@ -429,171 +432,170 @@ ul {
 
 
 
-
-
-/* JSON Sayfası için stiller */
-.json-page {
+/* JSON Sayfası */
+#json-container {
     display: flex;
-    justify-content: center;
-    flex-direction: column; /* Başlığı ve içeriği dikeyde hizalayacak */
-    align-items: center;
-    min-height: 100vh;
-    width: 100%; /* Tüm sayfa genişliğini kapsayacak */
-    padding: 20px;
-    margin-top: 70px; /* Başlığı navbar altında sabitlemek için */
+    margin-top: 20px;
+    height: calc(100vh - 140px); /* Header ve footer yüksekliğini çıkarın */
+    width: 100%;
 }
 
-    /* Başlık */
-    .json-page h1 {
-        color: #1f1f1f;
-        font-size: 2.5rem;
-        margin-bottom: 30px;
-        text-align: center;
-        font-weight: bold;
-        width: 100%; /* Başlık tam genişlik alacak */
-    }
-
-    /* Container */
-    .json-page .container {
-        display: flex;
-        flex-direction: row; /* İki sütunu yan yana getirecek */
-        justify-content: space-between;
-        width: 100%; /* Container tüm sayfayı kapsayacak */
-        max-width: 1600px; /* Maksimum genişlik */
-        background-color: #fff;
-        padding: 40px;
-        border-radius: 10px;
-        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-        gap: 20px; /* Kolonlar arasında boşluk */
-    }
+/* Başlık */
+h1 {
+    font-size: 2.5rem;
+    color: #1f1f1f;
+    margin-top: 120px;
+    margin-bottom: 30px;
+    text-align: center;
+    font-weight: bold;
+}
 
 /* Sol Kolon */
 .left-column {
-    width: 25%; /* Sol kolonu genişletmek için */
+    width: 30%;
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
 
-    .left-column button {
-        width: 100%;
-        padding: 10px 20px;
-        background-color: #1f1f1f;
-        color: #fff;
-        border: none;
-        border-radius: 5px;
-        font-size: 1.2rem;
-        cursor: pointer;
+/* Yeni JSON Butonu */
+#new-json-btn {
+    padding: 10px;
+    background-color: #1f1f1f;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+    #new-json-btn:hover {
+        background-color: #333;
     }
 
-        .left-column button:hover {
-            background-color: #333;
-        }
-
+/* Arama Kutusu */
 #search-json {
     padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-size: 1.1rem;
     width: 100%;
-    margin-bottom: 20px;
+}
+
+/* JSON Listesi */
+#json-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+    #json-list li {
+        margin-bottom: 10px;
+    }
+
+.json-item {
+    padding: 10px;
+    background-color: #f4f4f9;
     border: 1px solid #ddd;
     border-radius: 5px;
-    font-size: 1rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    text-align: left;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
+
+    .json-item:hover {
+        background-color: #ddd;
+    }
 
 /* Sağ Kolon */
 .right-column {
-    width: 70%; /* Sağ kolonu genişletmek için */
+    width: 70%;
+    padding-left: 30px;
 }
 
 .form-group {
     display: flex;
     justify-content: space-between;
-    align-items: center;
     margin-bottom: 20px;
 }
 
 .form-item {
-    width: 48%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-right: 20px;
 }
 
-label {
-    display: block;
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 5px;
-}
+    .form-item:last-child {
+        margin-right: 0;
+    }
 
-input[type="text"],
-input[type="date"],
-textarea {
-    width: 100%;
+    .form-item label {
+        display: block;
+        margin-bottom: 10px;
+        font-size: 1.2rem;
+        color: #1f1f1f;
+    }
+
+textarea,
+input,
+select {
     padding: 10px;
-    border: 1px solid #ddd;
     border-radius: 5px;
+    border: 1px solid #ddd;
+    width: 100%;
     font-size: 1rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
-/* Editor Yükseklikleri ve Yan Yana Görünüm */
+#json-container .right-column .editor-wrapper textarea.editor {
+    height: 800px;
+}
+
 .pattern-container {
     display: flex;
-    justify-content: space-between;
-    gap: 20px;
+    gap: 30px;
     margin-top: 20px;
 }
 
 .editor-wrapper {
-    display: flex;
-    flex-direction: column;
-    width: 48%;
+    flex: 1;
 }
 
-.editor {
-    height: 300px;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 1rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-}
-
-/* Buttonlar */
+/* Butonlar */
 .button-container {
+    margin-top: 30px;
     display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
+    gap: 20px;
 }
 
 .btn {
     padding: 10px 20px;
-    border-radius: 5px;
-    font-size: 1.2rem;
-    font-weight: 600;
-    text-align: center;
-    transition: background-color 0.3s ease;
-}
-
-.btn-primary {
     background-color: #1f1f1f;
     color: #fff;
     border: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-    .btn-primary:hover {
+    .btn:hover {
         background-color: #333;
     }
 
 .button-link {
-    padding: 10px 20px;
-    background-color: #f4f4f4;
-    color: #333;
-    border-radius: 5px;
     text-decoration: none;
+    background-color: #dc3545;
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: white;
 }
 
     .button-link:hover {
-        background-color: #ddd;
+        background-color: #c82333;
     }
 
 
