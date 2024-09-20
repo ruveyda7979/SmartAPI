@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
             lineNumbers: true,
             mode: 'javascript'// Varsayılan dil
         });
+        sentPatternEditor.setSize(null, "800px");  // Yüksekliği 600px olarak ayarla
     }
 
     //Eğer 'received-pattern' alanı varsa editör olarak başlat
@@ -26,6 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
             lineNumbers: true,
             mode: 'javascript' //Varsayılan dil
         });
+        receivedPatternEditor.setSize(null, "800px");  // Yüksekliği 600px olarak ayarla
     }
 
     //Kullanıcı dil seçimi yaptığında, editörlerin dil modlarını güncelle

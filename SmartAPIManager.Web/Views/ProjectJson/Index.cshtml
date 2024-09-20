@@ -14,7 +14,7 @@
     <!-- Sol Kolon -->
     <div class="left-column">
         <form method="get" asp-action="Create" asp-route-projectId="@Model.ProjectId">
-            <button id="new-json-btn" type="submit">New</button>
+            <button id="new-json-btn" type="submit" class="btn btn-primary">New</button>
         </form>
 
         <input type="text" id="search-json" placeholder="Search JSON by name...">
@@ -98,7 +98,7 @@
             <!-- Save ve Back to Projects Butonları -->
             <div class="button-container">
                 <button id="save-btn" type="submit" class="btn btn-primary">Save</button>
-                <a asp-action="Index" asp-controller="Project" class="button-link" id="back-to-projects-link">Back to Projects</a>
+                <a asp-action="Index" asp-controller="Project" class="btn btn-primary button-link" id="back-to-projects-link">Back to Projects</a>
             </div>
         </form>
     </div>
@@ -107,4 +107,6 @@
 @section scripts {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/javascript/javascript.min.js"></script>
+    
 }
+
