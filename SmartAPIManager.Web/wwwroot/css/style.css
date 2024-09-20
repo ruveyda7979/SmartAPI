@@ -41,15 +41,15 @@ body {
         font-size: 2.5rem; /* Daha büyük font */
         font-weight: bold; /* Kalın font */
         color: #fff; /* Beyaz renkte */
-        text-decoration:none;
+        text-decoration: none;
     }
 
     /* Login Butonu Stili */
     .header-content .btn-primary {
-        font-size: 2rem;
-        font-weight:bold;
+        font-size: 1.5rem;
+        font-weight: bold;
         padding: 10px 20px;
-        color:#fff;
+        color: #fff;
         background-color: #1f1f1f;
         border: 2px solid #ccc;
         margin-left: auto; /* Butonu sağ tarafa taşı */
@@ -152,31 +152,53 @@ body {
     justify-content: center;
     align-items: center;
     width: 100%; /* Sayfanın genişliğine göre form ayarlanacak */
+    height: auto;
     padding: 20px;
     padding-top: 150px;
+    box-sizing: border-box;
 }
 
     .auth-page h2 {
         text-align: center; /* Center the title */
         color: #1f1f1f;
         margin-bottom: 20px;
-        font-size: 2rem;
+        font-size: 2.5rem;
         font-weight: bold;
     }
 
     .auth-page form {
-        width: 100%; /* Form should take the full width available */
-        max-width: 1000px; /* Adjusted to make it wider */
+        max-width: 100%; /* Adjusted to make it wider */
+        width: 600px; /* Form should take the full width available */
         background-color: #fff;
         padding: 50px;
         border-radius: 10px;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         margin-top: 20px; /* Add some space below the title */
+        box-sizing: border-box;
     }
 
         .auth-page form div {
             margin-bottom: 25px;
         }
+
+            .auth-page form div.checkbox-container {
+                display: inline-flex; /* Flexbox kullanarak öğeleri yan yana diz */
+                align-items: center; /* Dikeyde ortala */
+            }
+
+                .auth-page form div.checkbox-container input[type="checkbox"] {
+                    margin-right: 15px; /* Checkbox ile metin arasında biraz boşluk bırak */
+                    width: 30px;
+                    height: 30px;
+                }
+
+                .auth-page form div.checkbox-container label {
+                    margin: 0; /* Label'ın etrafındaki varsayılan boşlukları kaldır */
+                    padding: 0;
+                }
+
+
+
 
     .auth-page label {
         font-size: 1.3rem; /* Label yazı boyutunu artırdık */
@@ -190,7 +212,7 @@ body {
         padding: 20px;
         border-radius: 5px;
         border: 1px solid #ccc;
-        font-size: 1.1rem;
+        font-size: 1.2rem;
         box-sizing: border-box;
     }
 
@@ -508,7 +530,7 @@ ul {
 
 /*.editor-wrapper textarea.editor {
     height: 900px;*/ /* Yüksekliği artır */
-    /*width: 100%;
+/*width: 100%;
 }*/
 
 
@@ -524,9 +546,9 @@ ul {
     box-sizing: border-box; /* Padding ve border dahil olacak şekilde hesapla */
 }
 
-    /*#json-form textarea.editor {
+/*#json-form textarea.editor {
         height: 800px;*/ /* Textarea yüksekliği daha makul ayarlandı */
-    /*}*/
+/*}*/
 
 #json-form button {
     padding: 10px 20px;
@@ -707,4 +729,3 @@ ul {
     font-size: 1.2rem !important; /* Select kutusu fontunu ayarla */
     height: 45px !important; /* Diğer input'larla aynı yüksekliğe getir */
 }
-
