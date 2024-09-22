@@ -38,8 +38,12 @@
                     {
                         <li>
                             <a href="@file.FileWay" target="_blank">@file.FileName</a>
-                            <input type="checkbox" name="FilesToDelete" value="@file.ProjectFileId" /> Sil
+                            <div class="file-delete">
+                                <input type="checkbox" name="FilesToDelete" value="@file.ProjectFileId" id="file-@file.ProjectFileId" />
+                                <label for="file-@file.ProjectFileId">Sil</label>
+                            </div>
                         </li>
+
                     }
                 </ul>
             }

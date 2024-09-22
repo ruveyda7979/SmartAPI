@@ -361,16 +361,20 @@ body {
     min-height: 100vh;
     padding: 40px;
     margin-top: 70px; /* Navbar'ın altında yer almak için */
+    box-sizing:border-box;
 }
 
     /* Container */
     .create-project-page .container {
         width: 100%;
-        max-width: 1200px; /* Genişlik sabitlendi */
+        max-width: 1500px; /* Genişlik sabitlendi */
         background-color: #fff;
         padding: 40px;
         border-radius: 10px;
         box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        min-height:600px;
+        box-sizing:border-box;
+
     }
 
     /* Başlık */
@@ -397,21 +401,21 @@ body {
         font-size: 1.5rem; /* Label yazı boyutu artırıldı */
         color: #333;
         font-weight: bold; /* Kalınlaştırıldı */
-        flex: 0 0 140px; /* Sabit genişlik, label'ları hizalamak için */
+        flex: 0 0 200px; /* Sabit genişlik, label'ları hizalamak için */
         text-align: right; /* Sağdan hizala */
-        margin-right: 5px; /* Label ile input arasında boşluk */
+        margin-right: 10px; /* Label ile input arasında boşluk */
     }
 
     .form-group input,
     .form-group textarea,
     .form-group select {
         width: 100%;
-        padding: 5px;
+        padding: 10px;
         border-radius: 6px;
         border: 1px solid #ddd;
         font-size: 1.2rem;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-        max-width: 600px; /* Input genişliği sabitlendi */
+        max-width: 900px; /* Input genişliği sabitlendi */
     }
 
         /* Dosya Yükleme Inputu */
@@ -421,6 +425,7 @@ body {
             border: none;
             box-shadow: none;
             max-width: 600px; /* File input genişliği aynı yapıldı */
+            min-width:400px;
         }
 
 /* Butonlar */
@@ -453,7 +458,32 @@ ul {
         margin: 5px 0;
         font-size: 1.2rem;
         color: #333;
+        word-wrap:break-word;
+        max-width:100%;
     }
+
+.file-delete {
+    display: flex;
+    align-items: center;
+    margin-top: 5px; /* Dosya adı ile checkbox arasındaki boşluğu ayarla */
+}
+
+    .file-delete input[type="checkbox"] {
+        margin-right: 0px; /* Tüm boşlukları kaldır */
+        padding: 0;
+        width: 16px; /* Varsayılan checkbox boyutuna dön */
+        height: 16px;
+        vertical-align: middle; /* Checkbox'ı ortala */
+    }
+
+    .file-delete label {
+        margin: 0;
+        padding: 0;
+        font-size: 1rem;
+        color: #333;
+        vertical-align: middle; /* Label'ı ortala */
+    }
+
 
 
 
@@ -527,11 +557,12 @@ ul {
     display: block;
     margin-top: 10px;
 }
-
 /*.editor-wrapper textarea.editor {
     height: 900px;*/ /* Yüksekliği artır */
 /*width: 100%;
 }*/
+
+
 
 
 #json-form input[type="text"],
@@ -711,6 +742,25 @@ ul {
     max-height: 800px !important;
 }
 
+#json-container textarea#content {
+    width: 100%; /* Genişliği tüm form alanıyla uyumlu yap */
+    padding: 10px; /* Input'larla aynı padding */
+    border-radius: 5px; /* Input'larla aynı border-radius */
+    border: 1px solid #ddd; /* Aynı border stili */
+    font-size: 1.2rem; /* Diğer input'larla aynı yazı boyutu */
+    height: 80px; /* Yüksekliği input'larla uyumlu hale getirmek için ayarlandı */
+    box-sizing: border-box; /* Padding ve border dahil */
+    margin-bottom: 20px; /* Diğer form alanlarıyla boşluk tutarlılığı */
+}
+
+#json-container .form-item textarea#content {
+    margin-top: 5px;
+    margin-right: 10px;
+    width: 100%;
+    height: 150px; /* İhtiyacınıza göre yüksekliği ayarlayın */
+}
+
+
 
 /* Label'ların Font Boyutunu ve Hizalamasını Düzenleyin */
 #json-container .pattern-container label {
@@ -729,3 +779,18 @@ ul {
     font-size: 1.2rem !important; /* Select kutusu fontunu ayarla */
     height: 45px !important; /* Diğer input'larla aynı yüksekliğe getir */
 }
+
+.form-group label {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #1f1f1f;
+    margin-bottom: 10px;
+}
+
+#json-container label {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #1f1f1f;
+    margin-bottom: 10px;
+}
+
