@@ -6,6 +6,7 @@ namespace SmartAPIManager.Web.Models
     {
         public int ProjectJsonId { get; set; }
         public int ProjectId { get; set; }
+        public string ProjectName { get; set; }
         public string JsonName { get; set; }
         public DateTime Date { get; set; }
         public string RequestURL { get; set; }

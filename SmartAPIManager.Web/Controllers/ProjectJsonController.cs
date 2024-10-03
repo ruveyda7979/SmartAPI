@@ -10,20 +10,28 @@ namespace SmartAPIManager.Web.Controllers
     public class ProjectJsonController : Controller
     {
         private readonly ProjectJsonService _projectJsonService;
-        public ProjectJsonController(ProjectJsonService projectJsonService)
+        private readonly ProjectService _projectService;
+        public ProjectJsonController(ProjectJsonService projectJsonService, ProjectService projectService)
         {
             _projectJsonService = projectJsonService;
-            
+            _projectService = projectService;
         }
 
         //Get:ProjectJson/Index?projectId=1
 
         public async Task<IActionResult> Index(int projectId)
         {
+            var project = await _projectService.GetByIdAsync(projectId);
+            if (project == null)
+            {
+                return NotFound();
+            }
+
             var projectJsons = await _projectJsonService.SelectManyAsync(x => x.ProjectId == projectId);
             var model = new ProjectJsonViewModel
             {
                 ProjectId = projectId,
+                ProjectName = project.Name,
                 JsonList = projectJsons?.ToList() ?? new List<ProjectJson>() //Eğer null ise boş liste döner
             };
             return View(model);

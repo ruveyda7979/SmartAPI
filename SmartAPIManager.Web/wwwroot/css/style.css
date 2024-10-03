@@ -59,16 +59,44 @@ body {
             background-color: #333;
         }
 
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing:border-box;
+}
 
 /* Home sayfası */
 .home-page {
-    background: url("../image/apiBlog.png") no-repeat center center/cover;
+    /*background: url("../images/apiBlog.png") no-repeat center center/cover;
     background-size: cover;
     height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-between;*/
+
+    background: url('@Url.Content("~/images/apiBlog.png")') no-repeat center center/cover;
+    min-height: 100vh; /* Minimum yüksekliği ekranın tamamı yap */
+    background-size: cover; /* Resmi tam ekran yap */
+    background-attachment: fixed; /* Arka planın sabit kalmasını sağlar */
 }
+
+    .home-page .container {
+        width: 100%;
+        max-width: 100%;
+        padding: 0;
+        margin: 0;
+    }
+
+
+
+/* İçeriği resmin üstüne yerleştirme */
+.home-page .content {
+    z-index: 1; /* İçeriği resmin üstünde tutmak için */
+    position: relative; /* Z-index'in çalışması için relative kullanıyoruz */
+}
+
+
 
 /* Footer stili */
 .footer {
@@ -77,7 +105,7 @@ body {
     background-color: rgba(31, 31, 31, 0.85); /* Koyu bir transparan arka plan rengi */
     color: #fff;
     text-align: center;
-    position: relative;
+    position: absolute;
     bottom: 0;
 }
 
@@ -361,7 +389,7 @@ body {
     min-height: 100vh;
     padding: 40px;
     margin-top: 70px; /* Navbar'ın altında yer almak için */
-    box-sizing:border-box;
+    box-sizing: border-box;
 }
 
     /* Container */
@@ -372,9 +400,8 @@ body {
         padding: 40px;
         border-radius: 10px;
         box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-        min-height:600px;
-        box-sizing:border-box;
-
+        min-height: 600px;
+        box-sizing: border-box;
     }
 
     /* Başlık */
@@ -425,7 +452,7 @@ body {
             border: none;
             box-shadow: none;
             max-width: 600px; /* File input genişliği aynı yapıldı */
-            min-width:400px;
+            min-width: 400px;
         }
 
 /* Butonlar */
@@ -458,8 +485,8 @@ ul {
         margin: 5px 0;
         font-size: 1.2rem;
         color: #333;
-        word-wrap:break-word;
-        max-width:100%;
+        word-wrap: break-word;
+        max-width: 100%;
     }
 
 .file-delete {
@@ -792,5 +819,251 @@ ul {
     font-weight: bold;
     color: #1f1f1f;
     margin-bottom: 10px;
+}
+
+
+/* Edit sayfası için küçük ekran düzenlemeleri */
+@media (max-width: 480px) { /* 576px ve altındaki ekranlar için */
+    .home-page {
+        background-size: cover; /* Küçük ekranlarda tam olarak görünmesini sağla */
+        height: 100vh; /* Yüksekliği tam ekran yap */
+        width: 100vw; /* Genişliği tam ekran yap */
+    }
+
+        .home-page .container {
+            width: 100%;
+            max-width: 100%;
+            padding: 0;
+            margin: 0;
+        }
+    
+    .create-project-page .container {
+        width: 100%; /* Konteyneri tam genişlik yap */
+        padding: 10px; /* İç kenar boşluklarını azalt */
+        box-sizing: border-box;
+    }
+
+    .form-group {
+        flex-direction: column; /* Form elemanlarını dikey hizala */
+        align-items: flex-start; /* Form elemanlarını sola hizala */
+        width: 100%; /* Tam genişlikte yap */
+    }
+
+        .form-group label {
+            width: 100%; /* Label'ı tam genişlikte yap */
+            font-size: 1rem; /* Yazı boyutunu küçült */
+            margin-bottom: 5px;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%; /* Form elemanlarını tam genişlikte yap */
+            font-size: 1rem; /* Yazı boyutunu küçült */
+            padding: 10px; /* Padding'i optimize et */
+            box-sizing: border-box; /* Taşmaları önlemek için */
+        }
+
+        /* Buton ve diğer alanlar */
+        .form-group button {
+            width: 100%; /* Butonu tam genişlikte yap */
+            padding: 10px 15px; /* İç kenar boşluklarını ayarla */
+        }
+
+        /* Dosya seçimi kutusuna uyum sağla */
+        .form-group input[type="file"] {
+            padding: 5px;
+            width: 100%;
+        }
+}
+
+
+
+
+/* Mobil Cihazlar için (max-width: 768px) */
+@media (max-width: 768px) {
+    /* Header alanını yeniden düzenle */
+    .header {
+        flex-direction: column; /* Yataydan dikeye geç */
+        padding: 20px;
+    }
+
+    .header-content {
+        flex-direction: column;
+        align-items: center; /* İçerikleri ortala */
+        text-align: center; /* Metinleri ortaya al */
+    }
+
+        .header-content .btn-primary {
+            margin-top: 10px; /* Butonlar arasına boşluk ekle */
+        }
+
+    /* Footer'ı düzenle */
+    .footer .footer-content {
+        flex-direction: column;
+        text-align: center; /* İçerikleri ortala */
+    }
+
+    /* Ana sayfa arka plan resmi ve boyutu */
+    .home-page {
+        background-size: cover; /* Küçük ekranlarda tam olarak görünmesini sağla */
+        height: 100vh; /* Yüksekliği tam ekran yap */
+        width: 100vw; /* Genişliği tam ekran yap */
+    }
+
+        .home-page .container {
+            width: 100%;
+            max-width: 100%;
+            padding: 0;
+            margin: 0;
+        }
+
+    
+    /* Formlar için düzenlemeler */
+    .auth-page form {
+        width: 90%; /* Form genişliğini biraz daha düşür */
+        padding: 20px;
+        margin: 0 auto;
+    }
+
+    .auth-page input {
+        width: 100%; /* Input'lar tam genişlikte olacak */
+        font-size: 1rem;
+        padding: 10px;
+    }
+
+    .auth-page button {
+        width: 100%; /* Buton tam genişlikte olacak */
+        padding: 15px;
+    }
+
+    /* Proje listesi sayfası */
+    #project-list li button {
+        width: 100%; /* Buton tam genişlikte olacak */
+        padding: 10px;
+        font-size: 1rem;
+    }
+
+    /* İçerik taşma problemini düzeltmek için container genişliği */
+    .projects-page .container {
+        padding: 20px;
+        width: 100%; /* Container tam genişlikte olacak */
+        overflow-x: hidden; /* Yatay taşmaları engelle */
+    }
+
+    #project-list li {
+        display: block; /* Kartları alt alta hizala */
+        width: 100%; /* Kart genişliğini tam yap */
+        margin-bottom: 15px;
+    }
+
+    .create-project-page .container {
+        width: 100%; /* Tam genişlik kullan */
+        padding: 15px;
+    }
+
+    .form-group label {
+        font-size: 1.1rem; /* Küçük ekranlar için yazı boyutunu küçült */
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+        font-size: 1rem;
+        padding: 10px; /* Form elemanlarının kenar boşluklarını küçült */
+        width: 100%; /* Tam genişlikte form elemanları */
+    }
+
+    .form-group {
+        display: block; /* Form elemanlarının daha iyi sıralanması için dikey hizala */
+    }
+
+
+    /* JSON Yönetici sayfasında sütunları alt alta getir */
+    #json-container {
+        flex-direction: column;
+    }
+
+    .left-column, .right-column {
+        width: 100%; /* Sütunları tam genişlik yap */
+        padding: 10px 0;
+    }
+
+    /* Butonları daha küçük ekranlar için düzenle */
+    .btn {
+        font-size: 1rem;
+        padding: 10px 15px;
+    }
+
+    /* Textarea alanlarını küçült */
+    #json-container textarea#content {
+        height: 200px;
+    }
+}
+
+/* Tabletler için (max-width: 1024px) */
+@media (max-width: 1024px) {
+    /* Header içerik düzenlemeleri */
+    .header-content .logo {
+        font-size: 2rem;
+    }
+
+    .header-content .btn-primary {
+        font-size: 1.2rem;
+    }
+
+    /* Proje listesi öğeleri */
+    #project-list li {
+        font-size: 1.2rem;
+    }
+
+        #project-list li button {
+            width: auto;
+            padding: 12px 20px; /* Buton paddingini ayarla */
+            font-size: 1.1rem;
+        }
+
+
+    .create-project-page .container {
+        width: 95%;
+    }
+     
+
+    /* Form elemanları */
+    .form-group label {
+        font-size: 1.2rem;
+    }
+
+    /* JSON sayfası düzenlemeleri */
+    .pattern-container .editor-wrapper {
+        width: 100%; /* Sütunları tam genişlik yap */
+    }
+}
+
+@media (max-width: 375px) {
+    .create-project-page .container {
+        width: 90% !important;
+        padding: 10px !important;
+        font-size: 0.9rem !important;
+    }
+
+    .form-group label {
+        font-size: 1rem !important;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+        font-size: 0.9rem !important;
+    }
+
+        .form-group input[type="file"] {
+            width: 100% !important;
+        }
+
+    .btn {
+        padding: 10px 15px !important;
+        font-size: 0.9rem !important;
+    }
 }
 

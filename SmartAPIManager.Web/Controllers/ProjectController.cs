@@ -1,4 +1,4 @@
-﻿  using DBSmartAPIManager.DAL.Entities;
+﻿using DBSmartAPIManager.DAL.Entities;
 using DBSmartAPIManager.DAL.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
