@@ -1,6 +1,7 @@
 ﻿using DBSmartAPIManager.DAL.Entities;
 using DBSmartAPIManager.DAL.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Build.Evaluation;
 using Microsoft.CodeAnalysis;
 using SmartAPIManager.Web.Models;
 using System.Linq;
@@ -127,16 +128,25 @@ namespace SmartAPIManager.Web.Controllers
         [HttpGet]
         public async Task<IActionResult>Edit(int id)
         {
-            var projectJson = await _projectJsonService.GetByIdAsync(id);
+			
+
+			var projectJson = await _projectJsonService.GetByIdAsync(id);
             if(projectJson == null)
             {
                 return NotFound();
             }
 
-            var model = new ProjectJsonViewModel
+			var project = await _projectService.GetByIdAsync(projectJson.ProjectId);
+			if (project == null)
+			{
+				return NotFound();
+			}
+
+			var model = new ProjectJsonViewModel
             {
                 ProjectJsonId = projectJson.ProjectJsonId,
                 ProjectId = projectJson.ProjectId,
+                ProjectName = project.Name,
                 JsonName = projectJson.JsonName,
                 Date = projectJson.UploadDate,
                 RequestURL = projectJson.RequestUrl,

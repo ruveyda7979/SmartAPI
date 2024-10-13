@@ -5,9 +5,11 @@
     Layout = "_Layout";
 }
 
-<h1>PROJECTS</h1>
+
 
 <div class="container">
+
+    <h1 class="page-title">PROJECTS</h1>
 
     <!--Add Project Button-->
     <form asp-action="Edit" asp-controller="Project" method="get" style="display:inline;">
@@ -21,6 +23,8 @@
         {
             <li>
                 <strong>@project.Name</strong>
+
+                <div class="project-buttons">
 
                 <!--Proje JSON sayfasına yönlendirme butonu-->
                 <form asp-action="GoToProjectJson" asp-controller="Project" method="get">
@@ -39,6 +43,8 @@
                     <input type="hidden" name="id" value="@project.ProjectId"/>
                     <button type="submit" class="btn btn-danger">Delete</button>
                 </form>
+
+                </div>
 
             </li>
         }

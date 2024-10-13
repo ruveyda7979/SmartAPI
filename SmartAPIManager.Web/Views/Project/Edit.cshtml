@@ -20,12 +20,12 @@
 
         <div class="form-group">
             <label for="project-name">Project Name:</label>
-            <input type="text" id="project-name" name="Name" class="form-control" value="@Model.Name" />
+            <input type="text" id="project-name" name="Name" class="form-control" value="@Model.Name"  required/>
         </div>
 
         <div class="form-group">
             <label for="project-description">Project Description:</label>
-            <textarea id="project-description" name="Description" class="form-control" required>@Model.Description</textarea>
+            <textarea id="project-description" name="Description" class="form-control" >@Model.Description</textarea>
         </div>
 
         <div class="form-group">
@@ -40,7 +40,7 @@
                             <a href="@file.FileWay" target="_blank">@file.FileName</a>
                             <div class="file-delete">
                                 <input type="checkbox" name="FilesToDelete" value="@file.ProjectFileId" id="file-@file.ProjectFileId" />
-                                <label for="file-@file.ProjectFileId">Sil</label>
+                                
                             </div>
                         </li>
 
@@ -51,7 +51,10 @@
             <input type="hidden" id="project-name" name="ExistingFiles" class="form-control" value="@Model.Name" />
         </div>
 
+        <div class="form-group form-actions">
+            <button type="submit" class="btn btn-danger">Sil</button>
 
+        </div>
         
 
         <div class="form-group">
@@ -59,7 +62,11 @@
             <input type="date" id ="project-date" name="UploadDate" class="form-control" value="@Model.UploadDate.ToString("yyyy-MM-dd")" />
         </div>
 
-        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <div class="form-group form-actions">
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+
+       
 
     </form>
 

@@ -10,6 +10,7 @@ body {
     margin: 0;
     padding: 0;
     background-color: #f4f4f9;
+    font-size: 16px;
     /* width: 100vw; ve height: 100vh; KALDIRILDI */
 }
 
@@ -38,7 +39,7 @@ body {
 
     /* Logo Başlığı Stili */
     .header-content .logo {
-        font-size: 2.5rem; /* Daha büyük font */
+        font-size: 2rem; /* Daha büyük font */
         font-weight: bold; /* Kalın font */
         color: #fff; /* Beyaz renkte */
         text-decoration: none;
@@ -46,7 +47,7 @@ body {
 
     /* Login Butonu Stili */
     .header-content .btn-primary {
-        font-size: 1.5rem;
+        font-size: 1.2 rem;
         font-weight: bold;
         padding: 10px 20px;
         color: #fff;
@@ -63,7 +64,7 @@ html, body {
     height: 100%;
     margin: 0;
     padding: 0;
-    box-sizing:border-box;
+    box-sizing: border-box;
 }
 
 /* Home sayfası */
@@ -90,11 +91,11 @@ html, body {
 
 
 
-/* İçeriği resmin üstüne yerleştirme */
-.home-page .content {
-    z-index: 1; /* İçeriği resmin üstünde tutmak için */
-    position: relative; /* Z-index'in çalışması için relative kullanıyoruz */
-}
+    /* İçeriği resmin üstüne yerleştirme */
+    .home-page .content {
+        z-index: 1; /* İçeriği resmin üstünde tutmak için */
+        position: relative; /* Z-index'in çalışması için relative kullanıyoruz */
+    }
 
 
 
@@ -190,13 +191,13 @@ html, body {
         text-align: center; /* Center the title */
         color: #1f1f1f;
         margin-bottom: 20px;
-        font-size: 2.5rem;
+        font-size: 2rem;
         font-weight: bold;
     }
 
     .auth-page form {
         max-width: 100%; /* Adjusted to make it wider */
-        width: 600px; /* Form should take the full width available */
+        width: 480px; /* Form should take the full width available */
         background-color: #fff;
         padding: 50px;
         border-radius: 10px;
@@ -229,7 +230,7 @@ html, body {
 
 
     .auth-page label {
-        font-size: 1.3rem; /* Label yazı boyutunu artırdık */
+        font-size: 1.1rem; /* Label yazı boyutunu artırdık */
         margin-bottom: 10px;
         display: block;
         width: 100%; /* Label genişliğini de tam olarak kullan */
@@ -240,7 +241,7 @@ html, body {
         padding: 20px;
         border-radius: 5px;
         border: 1px solid #ccc;
-        font-size: 1.2rem;
+        font-size: 1rem;
         box-sizing: border-box;
     }
 
@@ -258,7 +259,7 @@ html, body {
         border: none;
         border-radius: 5px;
         font-weight: 600;
-        font-size: 1.2rem;
+        font-size: 1rem;
         cursor: pointer;
         transition: background-color 0.3s ease;
     }
@@ -302,14 +303,16 @@ html, body {
         box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); /* Gölge derinleştirildi */
     }
 
-    /* Başlık */
-    .projects-page h1 {
-        color: #1f1f1f;
-        font-size: 3rem; /* Font büyütüldü */
-        margin-bottom: 30px; /* Boşluk artırıldı */
-        text-align: center;
-        font-weight: bold;
-    }
+/* Başlık */
+.page-title {
+    text-align: left; /* Başlığı sola hizala */
+    font-size: 2.5rem; /* Başlık font büyüklüğü */
+    font-weight: bold; /* Kalın yazı tipi */
+    color: #1f1f1f; /* Başlık rengi */
+    margin-bottom: 30px; /* Alt boşluk */
+    margin-left: 0; /* Sol margin sıfırla */
+}
+
 
 /* Proje Listesi */
 #project-list {
@@ -327,20 +330,32 @@ html, body {
         background-color: #f9f9f9;
         border: 1px solid #ddd;
         border-radius: 8px; /* Köşeler daha yuvarlak */
-        font-size: 1.5rem; /* Proje adının boyutu büyütüldü */
+        font-size: 1.3rem; /* Proje adının boyutu büyütüldü */
     }
 
         /* Proje Adı */
         #project-list li strong {
-            font-size: 1.5rem; /* Proje adı büyütüldü */
+            font-size: 1.3rem; /* Proje adı büyütüldü */
             color: #333;
         }
 
 /* Butonlar */
+
+.project-buttons {
+    float: right;
+    display: flex;
+    gap: 5px;
+}
+
+    .project-buttons form {
+        margin: 0;
+    }
+
+
 .btn {
     padding: 15px 25px; /* Butonlar büyütüldü */
     border-radius: 6px;
-    font-size: 1.2rem; /* Buton yazı boyutu büyütüldü */
+    font-size: 1.1rem; /* Buton yazı boyutu büyütüldü */
     font-weight: 600;
     text-align: center;
     transition: background-color 0.3s ease;
@@ -425,7 +440,7 @@ html, body {
 
     /* Label ve Input hizalaması */
     .form-group label {
-        font-size: 1.5rem; /* Label yazı boyutu artırıldı */
+        font-size: 1.2rem; /* Label yazı boyutu artırıldı */
         color: #333;
         font-weight: bold; /* Kalınlaştırıldı */
         flex: 0 0 200px; /* Sabit genişlik, label'ları hizalamak için */
@@ -440,7 +455,7 @@ html, body {
         padding: 10px;
         border-radius: 6px;
         border: 1px solid #ddd;
-        font-size: 1.2rem;
+        font-size: 1.1rem;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         max-width: 900px; /* Input genişliği sabitlendi */
     }
@@ -455,11 +470,14 @@ html, body {
             min-width: 400px;
         }
 
+
+
+
 /* Butonlar */
 .btn {
     padding: 15px 25px;
     border-radius: 6px;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: 600;
     text-align: center;
     transition: background-color 0.3s ease;
@@ -482,6 +500,8 @@ ul {
 }
 
     ul li {
+        display:flex;
+        justify-content:flex-start;
         margin: 5px 0;
         font-size: 1.2rem;
         color: #333;
@@ -489,26 +509,55 @@ ul {
         max-width: 100%;
     }
 
+        ul li a {
+            display: inline-block;
+            max-width: 120px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            text-decoration: none;
+            color: #1f1f1f;
+            font-size: 1.1rem;
+            margin-right:5px;
+        }
+
+            ul li a:hover::after {
+                content: attr(href); /*href özelliğindeki tam dosya adını gösterir*/
+                position: absolute;
+                background-color: #333;
+                color: #fff;
+                padding: 5px 10px;
+                border-radius: 4px;
+                white-space: nowrap;
+                z-index: 100;
+                font-size: 1rem;
+                top: 25px;
+                left: 0;
+            }
+
 .file-delete {
-    display: flex;
-    align-items: center;
-    margin-top: 5px; /* Dosya adı ile checkbox arasındaki boşluğu ayarla */
+    margin-left: 5px;  /*Dosya adı ile checkbox arasındaki boşluğu ayarla*/ 
+    margin-right:80px; 
+    
 }
 
     .file-delete input[type="checkbox"] {
-        margin-right: 0px; /* Tüm boşlukları kaldır */
-        padding: 0;
+        margin-right: 5px; /* Tüm boşlukları kaldır */
         width: 16px; /* Varsayılan checkbox boyutuna dön */
         height: 16px;
-        vertical-align: middle; /* Checkbox'ı ortala */
     }
 
-    .file-delete label {
-        margin: 0;
-        padding: 0;
-        font-size: 1rem;
-        color: #333;
-        vertical-align: middle; /* Label'ı ortala */
+
+
+/* Create/Edit Project sayfasındaki Save Changes butonunu sağa hizalamak için */
+.create-project-page .form-actions {
+    display: flex;
+    justify-content: flex-end; /* Sağ tarafa hizala */
+    margin-top: 20px; /* Üst tarafa boşluk ekle */
+}
+
+    .create-project-page .form-actions .btn {
+        margin-right: 0; /* Sağ margin eklememek için */
     }
 
 
@@ -584,10 +633,7 @@ ul {
     display: block;
     margin-top: 10px;
 }
-/*.editor-wrapper textarea.editor {
-    height: 900px;*/ /* Yüksekliği artır */
-/*width: 100%;
-}*/
+
 
 
 
@@ -604,9 +650,7 @@ ul {
     box-sizing: border-box; /* Padding ve border dahil olacak şekilde hesapla */
 }
 
-/*#json-form textarea.editor {
-        height: 800px;*/ /* Textarea yüksekliği daha makul ayarlandı */
-/*}*/
+
 
 #json-form button {
     padding: 10px 20px;
@@ -634,13 +678,7 @@ ul {
 
 
 
-/* .button-link sınıfı, a etiketlerini buton gibi stilize eder */
-/* Genel buton stilleri */
-.button-container {
-    margin-top: 30px; /* Butonların üstüne 30px boşluk ekledik */
-    display: flex;
-    gap: 20px;
-}
+
 
 
 .btn {
@@ -674,6 +712,18 @@ ul {
         background-color: #333;
     }
 
+/* .button-link sınıfı, a etiketlerini buton gibi stilize eder */
+/* Genel buton stilleri */
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom:30px;
+}
+
+    .button-container .btn {
+        width: auto; /* Make sure buttons don't take full width */
+    }
+
 
 .project-name-container {
     text-align: left;
@@ -684,13 +734,20 @@ ul {
 }
 
 /* JSON sayfası için özel stiller */
+
+
 .json-page h1 {
-    text-align: center;
+    text-align: left;
     color: #333;
     margin-top: 120px; /* Başlığı header'dan uzaklaştırmak için margin-top ekleyin */
     margin-bottom: 20px;
-    font-size: 36px;
+    margin-left:20px;
+    font-size: 2rem;
+    
+    
 }
+
+
 
 .json-page .left-column {
     padding: 20px;
@@ -705,6 +762,7 @@ ul {
         cursor: pointer;
         border-radius: 4px;
         transition: background-color 0.3s;
+        font-size: 1rem;
     }
 
         .json-page .left-column button:hover {
@@ -731,6 +789,7 @@ ul {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        font-size: 1.2rem;
     }
 
         .json-page .left-column li button {
@@ -763,7 +822,7 @@ ul {
     }
 
 
-/* CSS dosyasının sonuna bunu ekleyin */
+
 .CodeMirror {
     height: 800px !important; /* Stil zorlaması */
     max-height: 800px !important;
@@ -836,7 +895,7 @@ ul {
             padding: 0;
             margin: 0;
         }
-    
+
     .create-project-page .container {
         width: 100%; /* Konteyneri tam genişlik yap */
         padding: 10px; /* İç kenar boşluklarını azalt */
@@ -918,7 +977,7 @@ ul {
             margin: 0;
         }
 
-    
+
     /* Formlar için düzenlemeler */
     .auth-page form {
         width: 90%; /* Form genişliğini biraz daha düşür */
@@ -979,6 +1038,9 @@ ul {
     }
 
 
+
+
+
     /* JSON Yönetici sayfasında sütunları alt alta getir */
     #json-container {
         flex-direction: column;
@@ -1027,7 +1089,7 @@ ul {
     .create-project-page .container {
         width: 95%;
     }
-     
+
 
     /* Form elemanları */
     .form-group label {
@@ -1066,4 +1128,3 @@ ul {
         font-size: 0.9rem !important;
     }
 }
-
